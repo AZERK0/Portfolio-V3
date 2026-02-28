@@ -180,5 +180,55 @@ function renderProjectsAndExperience() {
 }
 
 export function renderPortfolioPage() {
-  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#f48c25]/18 blur-3xl"></div><div class="pointer-events-none absolute right-0 top-0 h-80 w-80 rounded-full bg-[#f48c25]/8 blur-3xl"></div><div class="relative z-10">${renderHeader()}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-8 md:grid-cols-3 lg:grid-cols-4">${renderTopRow()}${renderInfoRow()}${renderProjectsAndExperience()}</main></div></div>`;
+  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute inset-0 bg-grid-pattern"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div><div class="bg-glow bg-glow-3"></div></div><div class="relative z-10">${renderHeader()}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-8 md:grid-cols-3 lg:grid-cols-4">${renderTopRow()}${renderInfoRow()}${renderProjectsAndExperience()}</main></div></div><style>
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(244,140,37,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,140,37,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  will-change: transform;
+}
+.bg-glow-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(244,140,37,0.22) 0%, transparent 70%);
+  top: -200px;
+  left: -150px;
+  animation: bg-drift-1 30s ease-in-out infinite;
+}
+.bg-glow-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(26,18,11,0.6) 0%, transparent 70%);
+  bottom: -250px;
+  right: -200px;
+  animation: bg-drift-2 40s ease-in-out infinite;
+}
+.bg-glow-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(244,140,37,0.15) 0%, transparent 70%);
+  top: 40%;
+  left: 40%;
+  animation: bg-drift-3 35s ease-in-out infinite;
+}
+@keyframes bg-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(100px, 80px) scale(1.1); }
+}
+@keyframes bg-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-80px, -60px) scale(1.15); }
+}
+@keyframes bg-drift-3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.3); }
+}
+</style>`;
 }
