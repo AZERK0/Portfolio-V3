@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Developer Portfolio Home - Minimalist Bento</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#1a120b", // Slightly darker to match "pitch black" feel while keeping warm tone
+                        "card-dark": "#231a10",
+                        "card-lighter": "#2d2216",
+                        "text-main": "#eaddcf",
+                        "text-muted": "#9d8a76"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col selection:bg-primary selection:text-white">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-white/5 bg-background-dark/95 backdrop-blur supports-[backdrop-filter]:bg-background-dark/60">
+<div class="container mx-auto px-4 h-16 flex items-center justify-between">
+<div class="flex items-center gap-2 text-text-main hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<span class="text-xl font-bold tracking-tight">ALEX.DEV</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#">Work</a>
+<a class="text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#">About</a>
+<a class="text-sm font-medium text-text-muted hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center justify-center h-9 px-4 rounded-full bg-primary/10 text-primary text-sm font-medium hover:bg-primary hover:text-background-dark transition-all border border-primary/20">
+<span class="mr-2 material-symbols-outlined text-[18px]">download</span>
+                    Resume
+                </button>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full flex justify-center py-8 px-4 sm:px-6 md:px-8">
+<div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-min">
+<!-- Hero Section (Bento Large) -->
+<div class="col-span-1 md:col-span-3 lg:col-span-3 row-span-2 relative overflow-hidden rounded-2xl bg-primary p-8 md:p-12 flex flex-col justify-between group">
+<div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/300')] bg-cover bg-center opacity-10 mix-blend-overlay transition-transform duration-700 group-hover:scale-105" data-alt="Abstract geometric pattern background"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+<div class="relative z-10">
+<div class="inline-flex items-center rounded-full bg-black/20 px-3 py-1 text-xs font-medium text-black backdrop-blur-sm mb-6 border border-black/10">
+<span class="relative flex h-2 w-2 mr-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-black"></span>
+</span>
+                        Open to work
+                    </div>
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-background-dark leading-[0.9] tracking-tighter uppercase mb-4">
+                        Building the<br/>future, one line<br/>at a time.
+                    </h1>
+</div>
+<div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mt-12">
+<p class="max-w-md text-background-dark/80 font-medium text-lg leading-relaxed">
+                        Full-stack developer specializing in scalable web applications and system architecture. Currently crafting digital experiences at Epitech.
+                    </p>
+<div class="flex gap-3">
+<button class="h-12 w-12 rounded-full bg-background-dark flex items-center justify-center text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">arrow_outward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Profile/Photo Card -->
+<div class="col-span-1 md:col-span-1 lg:col-span-1 row-span-2 bg-card-dark rounded-2xl p-2 border border-white/5 flex flex-col gap-2">
+<div class="flex-1 rounded-xl bg-card-lighter overflow-hidden relative group">
+<img alt="Portrait of developer" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Professional portrait of a developer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADpoDrP0I-JQ1ocwP-DCr1NYb4FDxawKVobHiVTZLI-x-CC_ZG4t13RvWnAKXOjaMSl750-_kDz_H_wBIRzy3OknzcVzEt6sbT-RXz-26iPM9BD21ZRivBsGhj6dMewikKuONJQSjtmrAu_15FuGUr3q0lf1RwkjwgMZltGZOOb4KJJlvuQv0f2J37vUdDLwMCKHAMWhtGQI-y65AeQrmRNhw9VN50Hx8jIW1DAIO0_xzchIEXg1qEMBP2bYDiaVXYakc3GZ65lRk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-card-dark via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<h3 class="text-white font-bold text-lg">Alex Doe</h3>
+<p class="text-text-muted text-sm">Paris based</p>
+</div>
+</div>
+<div class="h-14 rounded-xl bg-card-lighter flex items-center justify-between px-4 hover:bg-white/5 transition-colors cursor-pointer border border-white/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-muted">mail</span>
+<span class="text-sm font-medium text-text-main">Contact me</span>
+</div>
+<span class="material-symbols-outlined text-primary text-sm">chevron_right</span>
+</div>
+</div>
+<!-- Stats / Info Row -->
+<div class="col-span-1 md:col-span-3 lg:col-span-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Education 1 -->
+<div class="bg-card-dark rounded-2xl p-6 border border-white/5 hover:border-primary/30 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<span class="text-xs font-mono text-text-muted">2021-2026</span>
+</div>
+<h3 class="text-text-main font-bold text-lg leading-tight group-hover:text-primary transition-colors">Epitech Digital</h3>
+<p class="text-text-muted text-sm mt-1">MSc Computer Science</p>
+</div>
+<!-- Education 2 -->
+<div class="bg-card-dark rounded-2xl p-6 border border-white/5 hover:border-primary/30 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<div class="h-10 w-10 rounded-lg bg-card-lighter flex items-center justify-center text-text-muted group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<span class="text-xs font-mono text-text-muted">2021</span>
+</div>
+<h3 class="text-text-main font-bold text-lg leading-tight group-hover:text-white transition-colors">Lycée V. Hugo</h3>
+<p class="text-text-muted text-sm mt-1">Baccalauréat (Maths)</p>
+</div>
+<!-- Tech Stack Summary -->
+<div class="col-span-2 md:col-span-2 bg-card-dark rounded-2xl p-6 border border-white/5 flex flex-col justify-center relative overflow-hidden">
+<div class="absolute right-0 top-0 p-3 opacity-10">
+<span class="material-symbols-outlined text-6xl text-white">code</span>
+</div>
+<p class="text-text-muted text-xs font-bold uppercase tracking-wider mb-3">Core Stack</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 rounded bg-card-lighter border border-white/5 text-xs text-text-main font-medium">React</span>
+<span class="px-3 py-1.5 rounded bg-card-lighter border border-white/5 text-xs text-text-main font-medium">Node.js</span>
+<span class="px-3 py-1.5 rounded bg-card-lighter border border-white/5 text-xs text-text-main font-medium">TypeScript</span>
+<span class="px-3 py-1.5 rounded bg-card-lighter border border-white/5 text-xs text-text-main font-medium">Tailwind</span>
+<span class="px-3 py-1.5 rounded bg-card-lighter border border-white/5 text-xs text-text-main font-medium">PostgreSQL</span>
+<span class="px-3 py-1.5 rounded bg-card-lighter border border-white/5 text-xs text-text-main font-medium text-primary border-primary/20">+4 more</span>
+</div>
+</div>
+</div>
+<!-- Projects & Experience Split -->
+<div class="col-span-1 md:col-span-3 lg:col-span-4 grid grid-cols-1 lg:grid-cols-2 gap-4 mt-2">
+<!-- Projects Column -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-text-main text-xl font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary box-shadow-glow"></span>
+                            Selected Projects
+                        </h2>
+<a class="text-xs font-medium text-primary hover:text-white transition-colors" href="#">View all</a>
+</div>
+<!-- Project Card 1 -->
+<div class="group bg-card-dark hover:bg-card-lighter rounded-2xl p-1 pr-6 transition-all duration-300 border border-white/5 hover:border-primary/20 flex gap-4 h-32">
+<div class="w-32 h-full rounded-xl bg-card-lighter overflow-hidden shrink-0">
+<img alt="E-commerce dashboard interface" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Dashboard interface screenshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCxL7OnTTqitQov5TelGKlngPGeNXe-vHqRFNO5H39dKzsUe5MKj_wfJ9oZkpQk8Nap8LxdBJGH8Z-ygw6uvm0UEFFcbP2ITxXJ0bKBJvSR2oT1474FgXdjOQY75Z825N3bfPEbVoHPVIUylyF364eFCNeEIqH0xKw7kkqhuLqPkhgddJoZiWZPMbAXDv62di0F9GrzRpbTvg2ouAxjY-VKGsTekwTqssKTL4DjhQAKGHwiOGamUKICIf9KRPv7LihscU-0ZMdt7c"/>
+</div>
+<div class="flex flex-col justify-center py-2 flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-text-main font-bold text-lg truncate group-hover:text-primary transition-colors">Nexus Dashboard</h3>
+<span class="material-symbols-outlined text-text-muted text-sm -rotate-45 group-hover:rotate-0 transition-transform duration-300">arrow_forward</span>
+</div>
+<p class="text-text-muted text-sm line-clamp-2 mb-3">A comprehensive analytics platform for e-commerce businesses built with Next.js.</p>
+<div class="flex gap-2">
+<span class="text-[10px] uppercase font-bold text-text-muted bg-black/20 px-2 py-0.5 rounded">React</span>
+<span class="text-[10px] uppercase font-bold text-text-muted bg-black/20 px-2 py-0.5 rounded">D3.js</span>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="group bg-card-dark hover:bg-card-lighter rounded-2xl p-1 pr-6 transition-all duration-300 border border-white/5 hover:border-primary/20 flex gap-4 h-32">
+<div class="w-32 h-full rounded-xl bg-card-lighter overflow-hidden shrink-0">
+<img alt="Mobile app interface design" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Mobile application UI mockup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDVR2nHiKPtgUS6xxpGJYE51R3Y404A8tMQYyEIK_aDpF7ks_aSv1wtZFrft5Ay9p7E97e5-DOsqoImb_tXGJebVTd2tGyUaQzbuXjqc2d7DRjyVRii1Od9O-x8cISbtGDGCxAA-2kXk5HdnAGtvGVoWGLSDhMeEzKXt9MWk8pW58zFr3tsERJmpKhInkU6Bk9cFW3HahUv60NjlPtk20tdaLPpsqfW3fj_K1_-d-CyusN6JV14neQ9oUj8Gt71ci_GEd0hi2qjpM"/>
+</div>
+<div class="flex flex-col justify-center py-2 flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-text-main font-bold text-lg truncate group-hover:text-primary transition-colors">TaskFlow Mobile</h3>
+<span class="material-symbols-outlined text-text-muted text-sm -rotate-45 group-hover:rotate-0 transition-transform duration-300">arrow_forward</span>
+</div>
+<p class="text-text-muted text-sm line-clamp-2 mb-3">Productivity application focusing on gesture-based navigation.</p>
+<div class="flex gap-2">
+<span class="text-[10px] uppercase font-bold text-text-muted bg-black/20 px-2 py-0.5 rounded">Flutter</span>
+<span class="text-[10px] uppercase font-bold text-text-muted bg-black/20 px-2 py-0.5 rounded">Firebase</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Experience Column -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-text-main text-xl font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-white/20"></span>
+                            Experience
+                        </h2>
+<span class="text-xs font-medium text-text-muted">2.5 Years Total</span>
+</div>
+<div class="bg-card-dark rounded-2xl p-6 border border-white/5 flex flex-col gap-6">
+<!-- Experience Item 1 -->
+<div class="relative pl-6 border-l border-white/10">
+<span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-card-dark"></span>
+<div class="flex justify-between items-baseline mb-1">
+<h4 class="text-text-main font-bold text-lg">Full Stack Intern</h4>
+<span class="text-xs font-mono text-text-muted">2023 - Present</span>
+</div>
+<p class="text-primary text-sm font-medium mb-2">TechCorp Solutions</p>
+<p class="text-text-muted text-sm leading-relaxed">
+                                Spearheaded the migration of legacy codebase to React 18. Improved application performance by 40% through code splitting and optimization.
+                            </p>
+</div>
+<!-- Experience Item 2 -->
+<div class="relative pl-6 border-l border-white/10">
+<span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-card-lighter ring-4 ring-card-dark border border-text-muted"></span>
+<div class="flex justify-between items-baseline mb-1">
+<h4 class="text-text-main font-bold text-lg">Junior Web Developer</h4>
+<span class="text-xs font-mono text-text-muted">2022 - 2023</span>
+</div>
+<p class="text-primary text-sm font-medium mb-2">Creative Agency Paris</p>
+<p class="text-text-muted text-sm leading-relaxed">
+                                Collaborated with design teams to implement pixel-perfect responsive websites for luxury clients.
+                            </p>
+</div>
+</div>
+<!-- Freelance/Status Card -->
+<div class="bg-gradient-to-r from-card-lighter to-card-dark rounded-2xl p-5 border border-white/5 flex items-center justify-between">
+<div>
+<p class="text-text-main font-bold">Freelance Availability</p>
+<p class="text-text-muted text-sm">Accepting new projects for Q4 2024</p>
+</div>
+<button class="h-10 px-5 rounded-lg bg-white/5 text-white text-sm font-medium hover:bg-white/10 border border-white/10 transition-colors">
+                            Inquire
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="border-t border-white/5 bg-background-dark py-8 mt-12">
+<div class="container mx-auto px-4 text-center">
+<p class="text-text-muted text-sm">© 2024 Alex.Dev. Designed with minimalism in mind.</p>
+</div>
+</footer>
+</body></html>
