@@ -41,7 +41,7 @@ export const portfolioData: PortfolioData = {
   jobTitle: "Frontend Engineer",
   lastName: "Martin",
   portraitUrl:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuADpoDrP0I-JQ1ocwP-DCr1NYb4FDxawKVobHiVTZLI-x-CC_ZG4t13RvWnAKXOjaMSl750-_kDz_H_wBIRzy3OknzcVzEt6sbT-RXz-26iPM9BD21ZRivBsGhj6dMewikKuONJQSjtmrAu_15FuGUr3q0lf1RwkjwgMZltGZOOb4KJJlvuQv0f2J37vUdDLwMCKHAMWhtGQI-y65AeQrmRNhw9VN50Hx8jIW1DAIO0_xzchIEXg1qEMBP2bYDiaVXYakc3GZ65lRk",
+    "portrait.JPG",
   projects: [
     {
       description:
