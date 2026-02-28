@@ -14,11 +14,15 @@ function renderHeader() {
 }
 
 function renderHeroSection() {
-  return `<section class="relative col-span-1 overflow-hidden rounded-2xl bg-[#f48c25] p-8 md:col-span-2 lg:col-span-3"><div class="relative z-10"><div class="mb-6 inline-flex items-center rounded-full border border-black/10 bg-black/20 px-3 py-1 text-xs font-medium text-black backdrop-blur-sm"><span class="mr-2 flex h-2 w-2 rounded-full bg-black"></span>Open to work</div><h1 class="text-4xl font-black uppercase leading-[0.9] tracking-tighter text-[#1a120b] md:text-5xl lg:text-6xl">${portfolioData.heroTitle.replace(" one line", "<br/>one line")}</h1></div><div class="relative z-10 mt-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"><p class="max-w-md text-lg font-medium leading-relaxed text-[#1a120b]/80">${portfolioData.about}</p><button class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#1a120b] text-[#f48c25] transition hover:scale-110"><span class="material-symbols-outlined">arrow_outward</span></button></div><div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div></section>`;
+  return `<section class="relative col-span-1 flex min-h-[29rem] flex-col justify-between overflow-hidden rounded-2xl bg-[#f48c25] p-8 md:col-span-2 lg:col-span-7"><div class="relative z-10"><div class="mb-6 inline-flex items-center rounded-full border border-black/10 bg-black/20 px-3 py-1 text-xs font-medium text-black backdrop-blur-sm"><span class="mr-2 flex h-2 w-2 rounded-full bg-black"></span>Open to work</div><h1 class="text-4xl font-black uppercase leading-[0.9] tracking-tighter text-[#1a120b] md:text-5xl lg:text-6xl">${portfolioData.heroTitle.replace(" one line", "<br/>one line")}</h1></div><div class="relative z-10 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"><p class="max-w-md text-lg font-medium leading-relaxed text-[#1a120b]/80">${portfolioData.about}</p><button class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#1a120b] text-[#f48c25] transition hover:scale-110"><span class="material-symbols-outlined">arrow_outward</span></button></div><div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div></section>`;
 }
 
 function renderProfileSection() {
-  return `<section class="col-span-1 flex flex-col gap-2 rounded-2xl border border-white/5 bg-[#231a10] p-2 md:row-span-2"><div class="relative min-h-72 flex-1 overflow-hidden rounded-xl bg-[#2d2216]"><img src="${portfolioData.portraitUrl}" alt="${portfolioData.fullName}" class="absolute inset-0 h-full w-full object-cover" /><div class="absolute inset-0 bg-gradient-to-t from-[#231a10] via-transparent to-transparent opacity-60"></div><div class="absolute bottom-4 left-4 right-4"><h3 class="text-lg font-bold text-white">${portfolioData.fullName}</h3><p class="text-sm text-[#9d8a76]">${portfolioData.city} based</p></div></div><a href="#contact" class="flex h-14 items-center justify-between rounded-xl border border-white/5 bg-[#2d2216] px-4 transition hover:bg-white/5"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#9d8a76]">mail</span><span class="text-sm font-medium text-[#eaddcf]">Contact me</span></div><span class="material-symbols-outlined text-sm text-[#f48c25]">chevron_right</span></a></section>`;
+  return `<section class="col-span-1 flex min-h-[29rem] flex-col gap-2 rounded-2xl border border-white/5 bg-[#110f0e] p-2 md:col-span-1 lg:col-span-3"><div class="relative h-[23rem] overflow-hidden rounded-xl bg-[#171412] md:h-[24rem] lg:h-[25rem]"><img src="${portfolioData.portraitUrl}" alt="${portfolioData.fullName}" class="absolute inset-0 h-full w-full object-cover" /><div class="absolute inset-0 bg-gradient-to-t from-[#110f0e] via-transparent to-transparent opacity-60"></div><div class="absolute bottom-4 left-4 right-4"><h3 class="text-lg font-bold text-white">${portfolioData.fullName}</h3><p class="text-sm text-[#9d8a76]">${portfolioData.city} based</p></div></div><a href="#contact" class="flex h-14 items-center justify-between rounded-xl border border-white/5 bg-[#171412] px-4 transition hover:bg-white/5"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#9d8a76]">mail</span><span class="text-sm font-medium text-[#eaddcf]">Contact me</span></div><span class="material-symbols-outlined text-sm text-[#f48c25]">chevron_right</span></a></section>`;
+}
+
+function renderTopRow() {
+  return `<section class="col-span-1 grid grid-cols-1 gap-4 md:col-span-3 md:grid-cols-3 lg:col-span-4 lg:grid-cols-10">${renderHeroSection()}${renderProfileSection()}</section>`;
 }
 
 function renderInfoRow() {
@@ -28,26 +32,26 @@ function renderInfoRow() {
       const iconStyle =
         index === 0
           ? "bg-[#f48c25]/10 text-[#f48c25]"
-          : "bg-[#2d2216] text-[#9d8a76] group-hover:text-white";
+          : "bg-[#171412] text-[#9d8a76] group-hover:text-white";
 
       const content = `<div class="mb-4 flex items-start justify-between"><div class="flex h-10 w-10 items-center justify-center rounded-lg ${iconStyle}"><span class="material-symbols-outlined">${icon}</span></div><span class="text-xs font-mono text-[#9d8a76]">${education.period}</span></div><h3 class="text-lg font-bold leading-tight text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${education.school}</h3><p class="mt-1 text-sm text-[#9d8a76]">${education.degree}</p>`;
 
       return UiCard({
         children: content,
         className:
-          "group col-span-1 rounded-2xl border-white/5 bg-[#231a10] p-6 transition-colors hover:border-[#f48c25]/30",
+          "group col-span-1 rounded-2xl border-white/5 bg-[#110f0e] p-6 transition-colors hover:border-[#f48c25]/30",
       });
     })
     .join("");
 
   const stack = portfolioData.skills
-    .map((skill) => `<span class="rounded border border-white/5 bg-[#2d2216] px-3 py-1.5 text-xs font-medium text-[#eaddcf]">${skill.label}</span>`)
+    .map((skill) => `<span class="rounded border border-white/5 bg-[#171412] px-3 py-1.5 text-xs font-medium text-[#eaddcf]">${skill.label}</span>`)
     .join("");
 
   const stackCard = UiCard({
     children:
       `<p class="mb-3 text-xs font-bold uppercase tracking-wider text-[#9d8a76]">Core Stack</p><div class="flex flex-wrap gap-2">${stack}</div>`,
-    className: "col-span-2 rounded-2xl border-white/5 bg-[#231a10] p-6",
+    className: "col-span-2 rounded-2xl border-white/5 bg-[#110f0e] p-6",
   });
 
   return `<section class="col-span-1 grid grid-cols-2 gap-4 md:col-span-3 lg:col-span-4 md:grid-cols-4">${educationCards}${stackCard}</section>`;
@@ -62,7 +66,7 @@ function renderProjectCards() {
         .map((item) => `<span class="rounded bg-black/20 px-2 py-0.5 text-[10px] font-bold uppercase text-[#9d8a76]">${item}</span>`)
         .join("");
 
-      return `<article class="group flex h-32 gap-4 rounded-2xl border border-white/5 bg-[#231a10] p-1 pr-6 transition-all duration-300 hover:border-[#f48c25]/20 hover:bg-[#2d2216]"><div class="h-full w-32 shrink-0 overflow-hidden rounded-xl bg-[#2d2216]"><img src="${project.imageUrl}" alt="${project.name}" class="h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100" /></div><div class="flex min-w-0 flex-1 flex-col justify-center py-2"><div class="mb-1 flex items-start justify-between"><h3 class="truncate text-lg font-bold text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${project.name}</h3><span class="material-symbols-outlined -rotate-45 text-sm text-[#9d8a76] transition-transform duration-300 group-hover:rotate-0">arrow_forward</span></div><p class="mb-3 line-clamp-2 text-sm text-[#9d8a76]">${project.description}</p><div class="flex gap-2">${tags}</div></div></article>`;
+      return `<article class="group flex h-32 gap-4 rounded-2xl border border-white/5 bg-[#110f0e] p-1 pr-6 transition-all duration-300 hover:border-[#f48c25]/20 hover:bg-[#171412]"><div class="h-full w-32 shrink-0 overflow-hidden rounded-xl bg-[#171412]"><img src="${project.imageUrl}" alt="${project.name}" class="h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100" /></div><div class="flex min-w-0 flex-1 flex-col justify-center py-2"><div class="mb-1 flex items-start justify-between"><h3 class="truncate text-lg font-bold text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${project.name}</h3><span class="material-symbols-outlined -rotate-45 text-sm text-[#9d8a76] transition-transform duration-300 group-hover:rotate-0">arrow_forward</span></div><p class="mb-3 line-clamp-2 text-sm text-[#9d8a76]">${project.description}</p><div class="flex gap-2">${tags}</div></div></article>`;
     })
     .join("");
 }
@@ -72,8 +76,8 @@ function renderExperienceSection() {
     .map((experience, index) => {
       const marker =
         index === 0
-          ? "bg-[#f48c25] ring-[#231a10]"
-          : "border border-[#9d8a76] bg-[#2d2216] ring-[#231a10]";
+          ? "bg-[#f48c25] ring-[#110f0e]"
+          : "border border-[#9d8a76] bg-[#171412] ring-[#110f0e]";
 
       return `<div class="relative border-l border-white/10 pl-6"><span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ring-4 ${marker}"></span><div class="mb-1 flex items-baseline justify-between"><h4 class="text-lg font-bold text-[#eaddcf]">${experience.role}</h4><span class="text-xs font-mono text-[#9d8a76]">${experience.period}</span></div><p class="mb-2 text-sm font-medium text-[#f48c25]">${experience.company}</p><p class="text-sm leading-relaxed text-[#9d8a76]">${experience.summary}</p></div>`;
     })
@@ -81,10 +85,10 @@ function renderExperienceSection() {
 
   const experienceCard = UiCard({
     children: timeline,
-    className: "flex flex-col gap-6 rounded-2xl border-white/5 bg-[#231a10] p-6",
+    className: "flex flex-col gap-6 rounded-2xl border-white/5 bg-[#110f0e] p-6",
   });
 
-  const freelanceCard = `<div class="flex items-center justify-between rounded-2xl border border-white/5 bg-gradient-to-r from-[#2d2216] to-[#231a10] p-5"><div><p class="font-bold text-[#eaddcf]">Freelance Availability</p><p class="text-sm text-[#9d8a76]">Accepting new projects for Q4 2026</p></div><button class="h-10 rounded-lg border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white/10">Inquire</button></div>`;
+  const freelanceCard = `<div class="flex items-center justify-between rounded-2xl border border-white/5 bg-gradient-to-r from-[#171412] to-[#110f0e] p-5"><div><p class="font-bold text-[#eaddcf]">Freelance Availability</p><p class="text-sm text-[#9d8a76]">Accepting new projects for Q4 2026</p></div><button class="h-10 rounded-lg border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white/10">Inquire</button></div>`;
 
   return `<section class="flex flex-col gap-4"><div class="flex items-center justify-between px-2"><h2 class="flex items-center gap-2 text-xl font-bold text-[#eaddcf]"><span class="h-2 w-2 rounded-full bg-white/20"></span>Experience</h2><span class="text-xs font-medium text-[#9d8a76]">2.5 Years Total</span></div>${experienceCard}${freelanceCard}</section>`;
 }
@@ -94,5 +98,5 @@ function renderProjectsAndExperience() {
 }
 
 export function renderPortfolioPage() {
-  return `<div class="relative min-h-screen bg-[#1a120b] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#26180f] via-[#1a120b] to-[#1a120b]"></div><div class="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#f48c25]/20 blur-3xl"></div><div class="pointer-events-none absolute right-0 top-0 h-80 w-80 rounded-full bg-[#f48c25]/10 blur-3xl"></div><div class="relative z-10">${renderHeader()}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-8 md:grid-cols-3 lg:grid-cols-4">${renderHeroSection()}${renderProfileSection()}${renderInfoRow()}${renderProjectsAndExperience()}</main></div></div>`;
+  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#f48c25]/18 blur-3xl"></div><div class="pointer-events-none absolute right-0 top-0 h-80 w-80 rounded-full bg-[#f48c25]/8 blur-3xl"></div><div class="relative z-10">${renderHeader()}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-8 md:grid-cols-3 lg:grid-cols-4">${renderTopRow()}${renderInfoRow()}${renderProjectsAndExperience()}</main></div></div>`;
 }
