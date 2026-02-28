@@ -14,7 +14,89 @@ function renderHeader() {
 }
 
 function renderHeroSection() {
-  return `<section class="relative col-span-1 flex min-h-[29rem] flex-col justify-between overflow-hidden rounded-2xl bg-[#f48c25] p-8 md:col-span-2 lg:col-span-7"><div class="relative z-10"><div class="mb-6 inline-flex items-center rounded-full border border-black/10 bg-black/20 px-3 py-1 text-xs font-medium text-black backdrop-blur-sm"><span class="mr-2 flex h-2 w-2 rounded-full bg-black"></span>Open to work</div><h1 class="text-4xl font-black uppercase leading-[0.9] tracking-tighter text-[#1a120b] md:text-5xl lg:text-6xl">${portfolioData.heroTitle.replace(" one line", "<br/>one line")}</h1></div><div class="relative z-10 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"><p class="max-w-md text-lg font-medium leading-relaxed text-[#1a120b]/80">${portfolioData.about}</p><button class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#1a120b] text-[#f48c25] transition hover:scale-110"><span class="material-symbols-outlined">arrow_outward</span></button></div><div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div></section>`;
+  return `<section class="relative col-span-1 flex min-h-[29rem] flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br from-[#f48c25] via-[#d4740a] to-[#1a120b] p-8 md:col-span-2 lg:col-span-7"><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="hero-blob hero-blob-1"></div><div class="hero-blob hero-blob-2"></div><div class="hero-blob hero-blob-3"></div><div class="hero-blob hero-blob-4"></div><div class="hero-blob hero-blob-5"></div></div><div class="relative z-10"><div class="mb-6 inline-flex items-center rounded-full border border-black/10 bg-black/20 px-3 py-1 text-xs font-medium text-black backdrop-blur-sm"><span class="mr-2 flex h-2 w-2 rounded-full bg-black"></span>Open to work</div><h1 class="text-4xl font-black uppercase leading-[0.9] tracking-tighter text-[#1a120b] md:text-5xl lg:text-6xl">${portfolioData.heroTitle.replace(" one line", "<br/>one line")}</h1></div><div class="relative z-10 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"><p class="max-w-md text-lg font-medium leading-relaxed text-[#1a120b]/80">${portfolioData.about}</p><button class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#1a120b] text-[#f48c25] transition hover:scale-110"><span class="material-symbols-outlined">arrow_outward</span></button></div><div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div></section><style>
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  mix-blend-mode: multiply;
+  will-change: transform;
+}
+.hero-blob-1 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #ff9f43 0%, #f48c25 50%, transparent 70%);
+  top: -50px;
+  left: -50px;
+  animation: blob-float-1 12s ease-in-out infinite;
+}
+.hero-blob-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #1a120b 0%, #0d0906 60%, transparent 70%);
+  bottom: -80px;
+  right: -60px;
+  animation: blob-float-2 14s ease-in-out infinite;
+  mix-blend-mode: overlay;
+}
+.hero-blob-3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, #ffb366 0%, #f48c25 40%, transparent 70%);
+  top: 40%;
+  left: 30%;
+  animation: blob-float-3 10s ease-in-out infinite;
+}
+.hero-blob-4 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, #2d1f14 0%, #1a120b 50%, transparent 70%);
+  top: 20%;
+  right: 10%;
+  animation: blob-float-4 16s ease-in-out infinite;
+  mix-blend-mode: overlay;
+}
+.hero-blob-5 {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, #ffd699 0%, #f48c25 50%, transparent 70%);
+  bottom: 20%;
+  left: 10%;
+  animation: blob-float-5 11s ease-in-out infinite;
+  opacity: 0.7;
+}
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  20% { transform: translate(60px, 40px) scale(1.3) rotate(15deg); }
+  40% { transform: translate(20px, 80px) scale(0.8) rotate(-10deg); }
+  60% { transform: translate(-50px, 30px) scale(1.2) rotate(20deg); }
+  80% { transform: translate(-30px, -20px) scale(0.9) rotate(-5deg); }
+}
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  25% { transform: translate(-80px, -60px) scale(1.4) rotate(-20deg); }
+  50% { transform: translate(40px, -100px) scale(0.7) rotate(15deg); }
+  75% { transform: translate(100px, -40px) scale(1.25) rotate(-10deg); }
+}
+@keyframes blob-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(-100px, 60px) scale(1.5) rotate(25deg); }
+  66% { transform: translate(80px, -40px) scale(0.6) rotate(-30deg); }
+}
+@keyframes blob-float-4 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  20% { transform: translate(-70px, 80px) scale(1.35) rotate(30deg); }
+  40% { transform: translate(100px, 40px) scale(0.75) rotate(-25deg); }
+  60% { transform: translate(30px, -60px) scale(1.2) rotate(15deg); }
+  80% { transform: translate(-40px, 20px) scale(0.85) rotate(-10deg); }
+}
+@keyframes blob-float-5 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  25% { transform: translate(80px, -50px) scale(1.4) rotate(20deg); }
+  50% { transform: translate(-60px, 70px) scale(0.65) rotate(-35deg); }
+  75% { transform: translate(50px, 40px) scale(1.3) rotate(10deg); }
+}
+</style>`;
 }
 
 function renderProfileSection() {
