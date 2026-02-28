@@ -1,87 +1,98 @@
-import { UiBadge } from "@repo/ui/badge";
-import { UiButton } from "@repo/ui/button";
 import { UiCard } from "@repo/ui/card";
 
 import { portfolioData } from "./data";
 
-function renderSectionTitle(title: string, rightContent: string) {
-  return `<div class="flex items-center justify-between px-1"><h2 class="text-xl font-semibold">${title}</h2>${rightContent}</div>`;
+function renderSocialIconButtons() {
+  const itemClass =
+    "inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#f48c25]/20 bg-[#f48c25]/10 text-[#f48c25] transition hover:bg-[#f48c25] hover:text-[#1a120b]";
+
+  return `<a href="#" aria-label="LinkedIn" class="${itemClass}"><svg viewBox="0 0 24 24" class="h-4 w-4 fill-current"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7 0h3.84v2.05h.05c.53-1.01 1.84-2.07 3.78-2.07 4.04 0 4.79 2.66 4.79 6.11V23h-4v-7.76c0-1.85-.03-4.23-2.58-4.23-2.58 0-2.97 2.01-2.97 4.09V23h-4V8z"/></svg></a><a href="#" aria-label="Malt" class="${itemClass}"><span class="text-sm font-bold leading-none">m</span></a><a href="#" aria-label="GitHub" class="${itemClass}"><svg viewBox="0 0 24 24" class="h-4 w-4 fill-current"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.41-4.04-1.41a3.19 3.19 0 0 0-1.34-1.76c-1.1-.75.08-.73.08-.73a2.53 2.53 0 0 1 1.85 1.24 2.58 2.58 0 0 0 3.53 1 2.58 2.58 0 0 1 .77-1.62c-2.66-.3-5.47-1.33-5.47-5.9a4.61 4.61 0 0 1 1.23-3.2 4.28 4.28 0 0 1 .12-3.15s1-.32 3.3 1.22a11.42 11.42 0 0 1 6 0c2.29-1.54 3.29-1.22 3.29-1.22a4.28 4.28 0 0 1 .12 3.15 4.6 4.6 0 0 1 1.23 3.2c0 4.58-2.82 5.6-5.5 5.9a2.88 2.88 0 0 1 .83 2.23v3.3c0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg></a>`;
 }
 
 function renderHeader() {
-  return `<header class="sticky top-0 z-20 border-b border-white/10 bg-zinc-950/70 backdrop-blur-xl"><div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6"><p class="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-300">${portfolioData.firstName}.<span class="text-amber-300">${portfolioData.lastName}</span></p><div class="hidden items-center gap-2 sm:flex">${UiBadge({ label: portfolioData.availability, tone: "accent" })}</div></div></header>`;
+  return `<header class="sticky top-0 z-40 w-full border-b border-white/5 bg-[#1a120b]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a120b]/70"><div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4"><div class="flex items-center gap-2 text-[#eaddcf]"><span class="material-symbols-outlined text-[#f48c25]">terminal</span><span class="text-xl font-bold tracking-tight">${portfolioData.firstName.toUpperCase()}.DEV</span></div><div class="flex items-center gap-2"><a href="#" class="hidden h-9 items-center justify-center rounded-full border border-[#f48c25]/20 bg-[#f48c25]/10 px-4 text-sm font-medium text-[#f48c25] transition hover:bg-[#f48c25] hover:text-[#1a120b] sm:inline-flex"><span class="material-symbols-outlined mr-2 text-[18px]">download</span>Resume</a>${renderSocialIconButtons()}</div></div></header>`;
 }
 
-function renderHero() {
-  return `<section class="rounded-3xl border border-amber-300/20 bg-gradient-to-br from-amber-300/95 to-amber-500/75 p-8 text-zinc-950 lg:col-span-3"><p class="inline-flex rounded-full border border-zinc-950/10 bg-zinc-950/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]">${portfolioData.jobTitle}</p><h1 class="mt-5 text-4xl font-black uppercase leading-[0.95] sm:text-5xl">${portfolioData.heroTitle}</h1><p class="mt-6 max-w-2xl text-base font-medium text-zinc-900/80">${portfolioData.about}</p><div class="mt-8 flex flex-wrap items-center gap-3">${UiButton({ href: portfolioData.ctaUrl, label: portfolioData.ctaLabel })}${UiButton({ href: "#projects", label: "Voir les projets", variant: "ghost" })}</div></section>`;
+function renderHeroSection() {
+  return `<section class="relative col-span-1 overflow-hidden rounded-2xl bg-[#f48c25] p-8 md:col-span-2 lg:col-span-3"><div class="relative z-10"><div class="mb-6 inline-flex items-center rounded-full border border-black/10 bg-black/20 px-3 py-1 text-xs font-medium text-black backdrop-blur-sm"><span class="mr-2 flex h-2 w-2 rounded-full bg-black"></span>Open to work</div><h1 class="text-4xl font-black uppercase leading-[0.9] tracking-tighter text-[#1a120b] md:text-5xl lg:text-6xl">${portfolioData.heroTitle.replace(" one line", "<br/>one line")}</h1></div><div class="relative z-10 mt-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"><p class="max-w-md text-lg font-medium leading-relaxed text-[#1a120b]/80">${portfolioData.about}</p><button class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#1a120b] text-[#f48c25] transition hover:scale-110"><span class="material-symbols-outlined">arrow_outward</span></button></div><div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div></section>`;
 }
 
-function renderProfileCard() {
-  return `<section class="overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/70 p-2 lg:col-span-1"><div class="relative h-full min-h-72 overflow-hidden rounded-[1.35rem]"><img src="${portfolioData.portraitUrl}" alt="${portfolioData.fullName}" class="absolute inset-0 h-full w-full object-cover" /><div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/10 to-transparent"></div><div class="absolute bottom-0 w-full p-5"><p class="text-lg font-semibold">${portfolioData.fullName}</p><p class="text-sm text-zinc-300">${portfolioData.city}</p></div></div></section>`;
+function renderProfileSection() {
+  return `<section class="col-span-1 flex flex-col gap-2 rounded-2xl border border-white/5 bg-[#231a10] p-2 md:row-span-2"><div class="relative min-h-72 flex-1 overflow-hidden rounded-xl bg-[#2d2216]"><img src="${portfolioData.portraitUrl}" alt="${portfolioData.fullName}" class="absolute inset-0 h-full w-full object-cover" /><div class="absolute inset-0 bg-gradient-to-t from-[#231a10] via-transparent to-transparent opacity-60"></div><div class="absolute bottom-4 left-4 right-4"><h3 class="text-lg font-bold text-white">${portfolioData.fullName}</h3><p class="text-sm text-[#9d8a76]">${portfolioData.city} based</p></div></div><a href="#contact" class="flex h-14 items-center justify-between rounded-xl border border-white/5 bg-[#2d2216] px-4 transition hover:bg-white/5"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#9d8a76]">mail</span><span class="text-sm font-medium text-[#eaddcf]">Contact me</span></div><span class="material-symbols-outlined text-sm text-[#f48c25]">chevron_right</span></a></section>`;
 }
 
-function renderStats() {
-  const content = portfolioData.stats
-    .map((stat) => {
-      const cardContent = `<p class="text-sm text-zinc-400">${stat.label}</p><p class="mt-2 text-2xl font-bold text-zinc-100">${stat.value}</p>`;
-      return UiCard({ children: cardContent, className: "p-5" });
-    })
-    .join("");
-
-  return `<section class="grid gap-4 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-4">${content}</section>`;
-}
-
-function renderEducationAndStack() {
+function renderInfoRow() {
   const educationCards = portfolioData.educations
-    .map((education) => {
-      const cardContent = `<p class="text-xs uppercase tracking-[0.18em] text-zinc-500">${education.period}</p><h3 class="mt-3 text-lg font-semibold text-zinc-100">${education.school}</h3><p class="mt-1 text-sm text-zinc-400">${education.degree}</p>`;
-      return UiCard({ children: cardContent, className: "p-5" });
+    .map((education, index) => {
+      const icon = index === 0 ? "school" : "history_edu";
+      const iconStyle =
+        index === 0
+          ? "bg-[#f48c25]/10 text-[#f48c25]"
+          : "bg-[#2d2216] text-[#9d8a76] group-hover:text-white";
+
+      const content = `<div class="mb-4 flex items-start justify-between"><div class="flex h-10 w-10 items-center justify-center rounded-lg ${iconStyle}"><span class="material-symbols-outlined">${icon}</span></div><span class="text-xs font-mono text-[#9d8a76]">${education.period}</span></div><h3 class="text-lg font-bold leading-tight text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${education.school}</h3><p class="mt-1 text-sm text-[#9d8a76]">${education.degree}</p>`;
+
+      return UiCard({
+        children: content,
+        className:
+          "group col-span-1 rounded-2xl border-white/5 bg-[#231a10] p-6 transition-colors hover:border-[#f48c25]/30",
+      });
     })
     .join("");
 
-  const skills = portfolioData.skills.map((skill) => UiBadge({ label: skill.label })).join("");
+  const stack = portfolioData.skills
+    .map((skill) => `<span class="rounded border border-white/5 bg-[#2d2216] px-3 py-1.5 text-xs font-medium text-[#eaddcf]">${skill.label}</span>`)
+    .join("");
+
   const stackCard = UiCard({
-    children: `<p class="text-xs uppercase tracking-[0.18em] text-zinc-500">Core stack</p><div class="mt-4 flex flex-wrap gap-2">${skills}</div>`,
-    className: "p-5",
+    children:
+      `<p class="mb-3 text-xs font-bold uppercase tracking-wider text-[#9d8a76]">Core Stack</p><div class="flex flex-wrap gap-2">${stack}</div>`,
+    className: "col-span-2 rounded-2xl border-white/5 bg-[#231a10] p-6",
   });
 
-  return `<section class="grid gap-4 md:grid-cols-2 lg:col-span-4">${educationCards}${stackCard}</section>`;
+  return `<section class="col-span-1 grid grid-cols-2 gap-4 md:col-span-3 lg:col-span-4 md:grid-cols-4">${educationCards}${stackCard}</section>`;
 }
 
-function renderProjects() {
-  const projectCards = portfolioData.projects
+function renderProjectCards() {
+  return portfolioData.projects
+    .slice(0, 2)
     .map((project) => {
       const tags = project.stack
-        .map((item) => UiBadge({ className: "!text-[0.65rem] uppercase", label: item, tone: "outline" }))
+        .slice(0, 2)
+        .map((item) => `<span class="rounded bg-black/20 px-2 py-0.5 text-[10px] font-bold uppercase text-[#9d8a76]">${item}</span>`)
         .join("");
 
-      const cardContent = `<div class="h-28 w-28 shrink-0 overflow-hidden rounded-2xl"><img src="${project.imageUrl}" alt="${project.name}" class="h-full w-full object-cover" /></div><div class="min-w-0"><h3 class="text-lg font-semibold text-zinc-100">${project.name}</h3><p class="mt-2 text-sm text-zinc-400">${project.description}</p><div class="mt-4 flex flex-wrap gap-2">${tags}</div></div>`;
-      return UiCard({ children: cardContent, className: "flex gap-4 p-4" });
+      return `<article class="group flex h-32 gap-4 rounded-2xl border border-white/5 bg-[#231a10] p-1 pr-6 transition-all duration-300 hover:border-[#f48c25]/20 hover:bg-[#2d2216]"><div class="h-full w-32 shrink-0 overflow-hidden rounded-xl bg-[#2d2216]"><img src="${project.imageUrl}" alt="${project.name}" class="h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100" /></div><div class="flex min-w-0 flex-1 flex-col justify-center py-2"><div class="mb-1 flex items-start justify-between"><h3 class="truncate text-lg font-bold text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${project.name}</h3><span class="material-symbols-outlined -rotate-45 text-sm text-[#9d8a76] transition-transform duration-300 group-hover:rotate-0">arrow_forward</span></div><p class="mb-3 line-clamp-2 text-sm text-[#9d8a76]">${project.description}</p><div class="flex gap-2">${tags}</div></div></article>`;
     })
     .join("");
-
-  const title = renderSectionTitle("Selected Projects", UiBadge({ label: `${portfolioData.projects.length} projets`, tone: "outline" }));
-  return `<section id="projects" class="space-y-4 lg:col-span-2">${title}${projectCards}</section>`;
 }
 
-function renderExperiences() {
-  const experienceCards = portfolioData.experiences
-    .map((experience) => {
-      const cardContent = `<p class="text-xs uppercase tracking-[0.18em] text-amber-300/80">${experience.period}</p><h3 class="mt-2 text-lg font-semibold text-zinc-100">${experience.role}</h3><p class="mt-1 text-sm font-medium text-zinc-300">${experience.company}</p><p class="mt-3 text-sm leading-relaxed text-zinc-400">${experience.summary}</p>`;
-      return UiCard({ children: cardContent, className: "p-5" });
+function renderExperienceSection() {
+  const timeline = portfolioData.experiences
+    .map((experience, index) => {
+      const marker =
+        index === 0
+          ? "bg-[#f48c25] ring-[#231a10]"
+          : "border border-[#9d8a76] bg-[#2d2216] ring-[#231a10]";
+
+      return `<div class="relative border-l border-white/10 pl-6"><span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ring-4 ${marker}"></span><div class="mb-1 flex items-baseline justify-between"><h4 class="text-lg font-bold text-[#eaddcf]">${experience.role}</h4><span class="text-xs font-mono text-[#9d8a76]">${experience.period}</span></div><p class="mb-2 text-sm font-medium text-[#f48c25]">${experience.company}</p><p class="text-sm leading-relaxed text-[#9d8a76]">${experience.summary}</p></div>`;
     })
     .join("");
 
-  const dataSourceCard = UiCard({
-    children:
-      "<p class=\"text-sm text-zinc-400\">Data source</p><p class=\"mt-1 text-base font-semibold text-zinc-100\">Fake data for now, Firebase-ready structure.</p>",
-    className: "bg-zinc-900/80 p-5",
+  const experienceCard = UiCard({
+    children: timeline,
+    className: "flex flex-col gap-6 rounded-2xl border-white/5 bg-[#231a10] p-6",
   });
 
-  const title = renderSectionTitle("Experience", UiBadge({ label: "Frontend first", tone: "accent" }));
-  return `<section id="contact" class="space-y-4 lg:col-span-2">${title}${experienceCards}${dataSourceCard}</section>`;
+  const freelanceCard = `<div class="flex items-center justify-between rounded-2xl border border-white/5 bg-gradient-to-r from-[#2d2216] to-[#231a10] p-5"><div><p class="font-bold text-[#eaddcf]">Freelance Availability</p><p class="text-sm text-[#9d8a76]">Accepting new projects for Q4 2026</p></div><button class="h-10 rounded-lg border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white/10">Inquire</button></div>`;
+
+  return `<section class="flex flex-col gap-4"><div class="flex items-center justify-between px-2"><h2 class="flex items-center gap-2 text-xl font-bold text-[#eaddcf]"><span class="h-2 w-2 rounded-full bg-white/20"></span>Experience</h2><span class="text-xs font-medium text-[#9d8a76]">2.5 Years Total</span></div>${experienceCard}${freelanceCard}</section>`;
+}
+
+function renderProjectsAndExperience() {
+  return `<section class="col-span-1 mt-2 grid grid-cols-1 gap-4 md:col-span-3 lg:col-span-4 lg:grid-cols-2"><div class="flex flex-col gap-4"><div class="flex items-center justify-between px-2"><h2 class="flex items-center gap-2 text-xl font-bold text-[#eaddcf]"><span class="h-2 w-2 rounded-full bg-[#f48c25]"></span>Selected Projects</h2><a href="#" class="text-xs font-medium text-[#f48c25] transition hover:text-white">View all</a></div>${renderProjectCards()}</div>${renderExperienceSection()}</section>`;
 }
 
 export function renderPortfolioPage() {
-  return `<div class="min-h-screen bg-[radial-gradient(circle_at_25%_20%,rgba(251,191,36,0.22),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(251,191,36,0.12),transparent_30%),#09090b] text-zinc-100">${renderHeader()}<main class="mx-auto grid w-full max-w-6xl gap-4 px-4 py-6 sm:px-6 lg:grid-cols-4">${renderHero()}${renderProfileCard()}${renderStats()}${renderEducationAndStack()}${renderProjects()}${renderExperiences()}</main></div>`;
+  return `<div class="relative min-h-screen bg-[#1a120b] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#26180f] via-[#1a120b] to-[#1a120b]"></div><div class="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#f48c25]/20 blur-3xl"></div><div class="pointer-events-none absolute right-0 top-0 h-80 w-80 rounded-full bg-[#f48c25]/10 blur-3xl"></div><div class="relative z-10">${renderHeader()}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-8 md:grid-cols-3 lg:grid-cols-4">${renderHeroSection()}${renderProfileSection()}${renderInfoRow()}${renderProjectsAndExperience()}</main></div></div>`;
 }

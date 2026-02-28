@@ -7,7 +7,7 @@ type UiBadgeProps = {
 };
 
 const badgeToneClass: Record<UiBadgeTone, string> = {
-  accent: "border-amber-300/30 bg-amber-400/15 text-amber-200",
+  accent: "border-[#f48c25]/30 bg-[#f48c25]/15 text-[#f6b272]",
   neutral: "border-white/10 bg-zinc-900 text-zinc-200",
   outline: "border-white/15 bg-transparent text-zinc-300",
 };
