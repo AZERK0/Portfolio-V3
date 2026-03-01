@@ -22,7 +22,7 @@ export const profileSeed: ProfileDocument = {
   city: "Lyon",
   country: "France",
   portraitUrl: "/portrait.JPG",
-  availability: "Disponible pour missions freelance",
+  availability: "Disponible pour stage (Avril - Aout)",
   aboutShort:
     "Developpeur Full-Stack axe produit, architecture scalable et experiences web performantes.",
   aboutLong:
@@ -53,7 +53,8 @@ export const studiesSeed: StudyDocument[] = [
     profileId,
     school: "Epitech Lyon",
     degree: "Programme en 5 ans - Expert en technologies de l'information",
-    degreeLevel: "RNCP niveau 7",
+    degreeLevel:
+      "Diplôme d’Expert(e) en technologies de l’information visé par le ministère de l’Enseignement supérieur et de la Recherche & Titre d’Expert(e) en ingénierie logicielle enregistré au RNCP niveau 7.",
     period: {
       start: { value: "2023", precision: "year" },
       end: { value: "2028", precision: "year" },
@@ -252,6 +253,87 @@ export const skillsSeed: SkillDocument[] = [
 
 export const projectsSeed: ProjectDocument[] = [
   {
+    id: "amazon-analyzer",
+    profileId,
+    slug: "amazon-analyzer",
+    title: "Amazon Analyzer",
+    shortDescription:
+        "SaaS + extension pour analyser la rentabilite e-commerce avec agent IA et donnees Keepa.",
+    longDescription:
+        "Creation d'un produit SaaS Full-Stack pour l'analyse de rentabilite Amazon avec analyse concurrentielle assistee par IA.",
+    category: "freelance",
+    period: {
+      start: { value: "2025", precision: "year" },
+      end: { value: "2025", precision: "year" },
+      label: "2025",
+    },
+    stack: ["Nuxt.js", "AdonisJS", "OpenAI", "Keepa API"],
+    cover: {
+      kind: "image",
+      alt: "Amazon Analyzer opportunity tracker",
+      url: "/projects/amazon-analyzer/opportunity-tracker.webp",
+    },
+    gallery: [
+      {
+        kind: "image",
+        alt: "Amazon Analyzer visual",
+        url: "/projects/amazon-analyzer/studio.webp",
+      },
+      {
+        kind: "image",
+        alt: "Amazon Analyzer AI synthese",
+        url: "/projects/amazon-analyzer/ai-synthese.webp",
+      }
+    ],
+    badge: { label: "Freelance", tone: "yellow" },
+    featured: true,
+    featuredRank: 1,
+    status: "published",
+  },
+  {
+    id: "finvio",
+    profileId,
+    slug: "finvio",
+    title: "Finvio",
+    shortDescription:
+        "Plateforme SaaS de gestion de patrimoine en architecture monorepo Full-Stack.",
+    longDescription:
+        "Developpement d'une solution SaaS avec front Nuxt et backend AdonisJS, orientee produit et performance.",
+    category: "freelance",
+    period: {
+      start: { value: "2025", precision: "year" },
+      end: { value: "2025", precision: "year" },
+      label: "2025",
+    },
+    stack: ["Nuxt.js", "AdonisJS", "TypeScript", "Turborepo"],
+    cover: {
+      kind: "image",
+      alt: "Finvio visual",
+      url: "/projects/finvio/home.webp",
+    },
+    gallery: [
+      {
+        kind: "image",
+        alt: "Finvio info",
+        url: "/projects/finvio/info.webp",
+      },
+      {
+        kind: "image",
+        alt: "Finvio wealth",
+        url: "/projects/finvio/wealth.webp",
+      },
+      {
+        kind: "image",
+        alt: "Finvio welcome",
+        url: "/projects/finvio/welcome.webp",
+      },
+    ],
+    badge: { label: "Freelance", tone: "yellow" },
+    featured: true,
+    featuredRank: 2,
+    status: "published",
+  },
+  {
     id: "atelier-sophie-sylvestre",
     profileId,
     slug: "atelier-sophie-sylvestre",
@@ -278,6 +360,21 @@ export const projectsSeed: ProjectDocument[] = [
         alt: "Atelier gallery",
         url: "/projects/atelier-sophie-sylvestre/gallery.webp",
       },
+      {
+        kind: "image",
+        alt: "Atelier interventions",
+        url: "/projects/atelier-sophie-sylvestre/interventions.webp",
+      },
+      {
+        kind: "image",
+        alt: "Atelier studies",
+        url: "/projects/atelier-sophie-sylvestre/studies.webp",
+      },
+      {
+        kind: "image",
+        alt: "Atelier contact",
+        url: "/projects/atelier-sophie-sylvestre/contact.webp",
+      },
     ],
     badge: { label: "Freelance", tone: "yellow" },
     links: [
@@ -290,7 +387,7 @@ export const projectsSeed: ProjectDocument[] = [
       },
     ],
     featured: true,
-    featuredRank: 1,
+    featuredRank: 3,
     status: "published",
   },
   {
@@ -318,58 +415,6 @@ export const projectsSeed: ProjectDocument[] = [
       description: "Le site est en cours de developpement.",
       tone: "yellow",
     },
-    featured: true,
-    featuredRank: 2,
-    status: "published",
-  },
-  {
-    id: "amazon-analyzer",
-    profileId,
-    slug: "amazon-analyzer",
-    title: "Amazon Analyzer",
-    shortDescription:
-      "SaaS + extension pour analyser la rentabilite e-commerce avec agent IA et donnees Keepa.",
-    longDescription:
-      "Creation d'un produit SaaS Full-Stack pour l'analyse de rentabilite Amazon avec analyse concurrentielle assistee par IA.",
-    category: "freelance",
-    period: {
-      start: { value: "2025", precision: "year" },
-      end: { value: "2025", precision: "year" },
-      label: "2025",
-    },
-    stack: ["Nuxt.js", "AdonisJS", "OpenAI", "Keepa API"],
-    cover: {
-      kind: "image",
-      alt: "Amazon Analyzer visual",
-      url: "/projects/amazon-analyzer/home.webp",
-    },
-    badge: { label: "Freelance", tone: "yellow" },
-    featured: true,
-    featuredRank: 3,
-    status: "published",
-  },
-  {
-    id: "finvio",
-    profileId,
-    slug: "finvio",
-    title: "Finvio",
-    shortDescription:
-      "Plateforme SaaS de gestion de patrimoine en architecture monorepo Full-Stack.",
-    longDescription:
-      "Developpement d'une solution SaaS avec front Nuxt et backend AdonisJS, orientee produit et performance.",
-    category: "freelance",
-    period: {
-      start: { value: "2025", precision: "year" },
-      end: { value: "2025", precision: "year" },
-      label: "2025",
-    },
-    stack: ["Nuxt.js", "AdonisJS", "TypeScript", "Turborepo"],
-    cover: {
-      kind: "image",
-      alt: "Finvio visual",
-      url: "/projects/finvio/home.webp",
-    },
-    badge: { label: "Freelance", tone: "yellow" },
     featured: true,
     featuredRank: 4,
     status: "published",
