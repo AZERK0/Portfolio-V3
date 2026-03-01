@@ -3,10 +3,7 @@ import {
   loadPortfolioHomeData,
   loadProjectDetailBySlug,
 } from "./portfolio/repository";
-import {
-  renderPortfolioLoadingState,
-  renderPortfolioPage,
-} from "./portfolio/view";
+import { renderPortfolioPage, renderWelcomeScreen } from "./portfolio/view";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 
@@ -23,12 +20,56 @@ function isContactPopupOpen(): boolean {
   return window.location.hash === "#contact-popup";
 }
 
-if (app) {
-  app.innerHTML = renderPortfolioLoadingState();
+function runWelcomeSequence(): Promise<void> {
+  return new Promise((resolve) => {
+    const existing = document.getElementById("welcome-screen");
+    if (existing) {
+      existing.remove();
+    }
 
+    document.body.insertAdjacentHTML("beforeend", renderWelcomeScreen());
+
+    const typedText = document.getElementById("typed-text");
+    const welcomeScreen = document.getElementById("welcome-screen");
+    const text = ">>> Bienvenue";
+    let index = 0;
+
+    const typeInterval = setInterval(() => {
+      if (typedText && index < text.length) {
+        typedText.textContent = text.slice(0, index + 1);
+        index++;
+      } else {
+        clearInterval(typeInterval);
+        setTimeout(() => {
+          if (welcomeScreen) {
+            welcomeScreen.classList.add("exit-glitch");
+            setTimeout(() => {
+              welcomeScreen.classList.add("exit-burst");
+              setTimeout(() => {
+                welcomeScreen.remove();
+                resolve();
+              }, 200);
+            }, 1100);
+          } else {
+            resolve();
+          }
+        }, 500);
+      }
+    }, 95);
+  });
+}
+
+if (app) {
   const homeDataPromise = loadPortfolioHomeData();
+  let hasPlayedInitialAnimations = false;
 
   const rerender = async () => {
+    if (hasPlayedInitialAnimations) {
+      app.classList.add("no-entry-animations");
+    } else {
+      app.classList.remove("no-entry-animations");
+    }
+
     const homeData = await homeDataPromise;
     const activeSlug = getProjectSlugFromHash();
     const activeProject = activeSlug
@@ -42,8 +83,13 @@ if (app) {
       activeSlug,
       isContactOpen,
     );
+
+    hasPlayedInitialAnimations = true;
   };
 
-  rerender();
+  runWelcomeSequence().then(() => {
+    rerender();
+  });
+
   window.addEventListener("hashchange", rerender);
 }
