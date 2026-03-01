@@ -216,7 +216,7 @@ function renderExperienceSection(data: PortfolioHomeViewModel) {
           ? "bg-[#f48c25] ring-[#110f0e]"
           : "border border-[#9d8a76] bg-[#171412] ring-[#110f0e]";
 
-      return `<a href="#experience/${experience.id}" class="group relative block rounded-xl border border-transparent p-3 -m-3 transition-colors hover:border-[#f48c25]/20 hover:bg-[#171412]/50"><div class="relative border-l border-white/10 pl-6"><span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ring-4 ${marker}"></span><div class="mb-1 flex items-baseline justify-between"><h4 class="text-lg font-bold text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${experience.role}</h4><span class="text-xs font-mono text-[#9d8a76]">${experience.period.label}</span></div><p class="mb-2 text-sm font-medium text-[#f48c25]">${experience.company}</p><p class="text-sm leading-relaxed text-[#9d8a76]">${experience.summary}</p></div></a>`;
+      return `<a href="#experience/${experience.id}" class="group relative block rounded-xl border border-transparent p-3 -m-3 transition-colors hover:border-[#f48c25]/20 hover:bg-[#171412]/50"><div class="relative border-l border-white/10 pl-6"><span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ring-4 ${marker}"></span><div class="mb-1 flex items-baseline justify-between"><h4 class="text-lg font-bold text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${experience.company}</h4><span class="text-xs font-mono text-[#9d8a76]">${experience.period.label}</span></div><p class="mb-2 text-sm font-medium text-[#f48c25]">${experience.role}</p><p class="text-sm leading-relaxed text-[#9d8a76]">${experience.summary}</p></div></a>`;
     })
     .join("");
 
