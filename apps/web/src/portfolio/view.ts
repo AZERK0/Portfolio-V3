@@ -214,7 +214,7 @@ function renderProjectDetailModal(
     ? `<div class="mb-4 overflow-hidden rounded-2xl border border-white/[0.08]"><img src="${project.cover.url}" alt="${project.cover.alt}" class="h-52 w-full object-cover" /></div><div class="mb-4 flex flex-wrap gap-2">${project.stack.map((item) => `<span class="rounded-xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-[#eaddcf]">${item}</span>`).join("")}</div><p class="mb-4 text-sm leading-relaxed text-[#9d8a76]">${project.longDescription ?? project.shortDescription}</p>${(project.sections ?? []).map((section) => `<div class="mb-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"><h4 class="mb-1 text-sm font-bold text-[#eaddcf]">${section.title}</h4><p class="text-sm text-[#9d8a76]">${section.body}</p></div>`).join("")}`
     : `<p class="text-sm text-[#9d8a76]">Chargement du projet ${slug}...</p>`;
 
-  return `<div class="fixed inset-0 z-50 flex items-center justify-center p-4"><a href="#" class="absolute inset-0 bg-black/55"></a><div class="glass-panel relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-[#eaddcf] shadow-[0_32px_96px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[28px]"><div class="relative z-10"><div class="mb-5 flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#f48c25]">Project detail</p><h3 class="mt-2 text-2xl font-black tracking-tight text-[#eaddcf]">${project?.title ?? slug}</h3></div><a href="#" class="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-medium text-[#eaddcf] transition hover:border-[#f48c25]/40 hover:bg-[#f48c25]/10 hover:text-[#f48c25]">Fermer</a></div>${body}</div></div></div>`;
+  return `<div class="modal-root fixed inset-0 z-50 flex items-center justify-center p-4"><a href="#" class="modal-backdrop absolute inset-0 bg-black/55"></a><div class="modal-card glass-panel relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-[#eaddcf] shadow-[0_32px_96px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[28px]"><div class="relative z-10"><div class="mb-5 flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#f48c25]">Project detail</p><h3 class="mt-2 text-2xl font-black tracking-tight text-[#eaddcf]">${project?.title ?? slug}</h3></div><a href="#" class="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-medium text-[#eaddcf] transition hover:border-[#f48c25]/40 hover:bg-[#f48c25]/10 hover:text-[#f48c25]">Fermer</a></div>${body}</div></div></div>`;
 }
 
 function renderContactModal(profile: ProfileDocument, isOpen: boolean) {
@@ -224,7 +224,7 @@ function renderContactModal(profile: ProfileDocument, isOpen: boolean) {
 
   const primaryLink = profile.links.find((link) => link.type === "linkedin");
 
-  return `<div class="fixed inset-0 z-50 flex items-center justify-center p-4"><a href="#" class="absolute inset-0 bg-[#030303]/55"></a><div class="glass-panel relative w-full max-w-lg overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-[#eaddcf] shadow-[0_32px_96px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[28px]"><div class="relative z-10"><div class="mb-5 flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#f48c25]">Contact</p><h3 class="mt-2 text-2xl font-black tracking-tight text-[#eaddcf]">${profile.fullName}</h3><p class="mt-1 text-sm text-[#9d8a76]">Disponible pour projets freelance et missions Full-Stack.</p></div><a href="#" class="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-medium text-[#eaddcf] transition hover:border-[#f48c25]/40 hover:bg-[#f48c25]/10 hover:text-[#f48c25]">Fermer</a></div><div class="space-y-3"><a href="mailto:${profile.email ?? ""}" class="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 transition hover:border-[#f48c25]/30 hover:bg-white/[0.07]"><span class="text-sm text-[#eaddcf]">${profile.email ?? "Email"}</span><span class="material-symbols-outlined text-sm text-[#f48c25] transition group-hover:translate-x-0.5">arrow_outward</span></a><a href="tel:${profile.phone ?? ""}" class="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 transition hover:border-[#f48c25]/30 hover:bg-white/[0.07]"><span class="text-sm text-[#eaddcf]">${profile.phone ?? "Telephone"}</span><span class="material-symbols-outlined text-sm text-[#f48c25] transition group-hover:translate-x-0.5">call</span></a>${primaryLink ? `<a href="${primaryLink.url}" ${primaryLink.openInNewTab ? 'target="_blank" rel="noreferrer"' : ""} class="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 transition hover:border-[#f48c25]/30 hover:bg-white/[0.07]"><span class="text-sm text-[#eaddcf]">LinkedIn</span><span class="material-symbols-outlined text-sm text-[#f48c25] transition group-hover:translate-x-0.5">arrow_outward</span></a>` : ""}</div><p class="mt-4 text-xs text-[#9d8a76]">Reponse rapide sous 24h en semaine.</p></div></div></div>`;
+  return `<div class="modal-root fixed inset-0 z-50 flex items-center justify-center p-4"><a href="#" class="modal-backdrop absolute inset-0 bg-black/55"></a><div class="modal-card glass-panel relative w-full max-w-lg overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-[#eaddcf] shadow-[0_32px_96px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[28px]"><div class="relative z-10"><div class="mb-5 flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#f48c25]">Contact</p><h3 class="mt-2 text-2xl font-black tracking-tight text-[#eaddcf]">${profile.fullName}</h3><p class="mt-1 text-sm text-[#9d8a76]">Disponible pour projets freelance et missions Full-Stack.</p></div><a href="#" class="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-medium text-[#eaddcf] transition hover:border-[#f48c25]/40 hover:bg-[#f48c25]/10 hover:text-[#f48c25]">Fermer</a></div><div class="space-y-3"><a href="mailto:${profile.email ?? ""}" class="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 transition hover:border-[#f48c25]/30 hover:bg-white/[0.07]"><span class="text-sm text-[#eaddcf]">${profile.email ?? "Email"}</span><span class="material-symbols-outlined text-sm text-[#f48c25] transition group-hover:translate-x-0.5">arrow_outward</span></a><a href="tel:${profile.phone ?? ""}" class="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 transition hover:border-[#f48c25]/30 hover:bg-white/[0.07]"><span class="text-sm text-[#eaddcf]">${profile.phone ?? "Telephone"}</span><span class="material-symbols-outlined text-sm text-[#f48c25] transition group-hover:translate-x-0.5">call</span></a>${primaryLink ? `<a href="${primaryLink.url}" ${primaryLink.openInNewTab ? 'target="_blank" rel="noreferrer"' : ""} class="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 transition hover:border-[#f48c25]/30 hover:bg-white/[0.07]"><span class="text-sm text-[#eaddcf]">LinkedIn</span><span class="material-symbols-outlined text-sm text-[#f48c25] transition group-hover:translate-x-0.5">arrow_outward</span></a>` : ""}</div><p class="mt-4 text-xs text-[#9d8a76]">Reponse rapide sous 24h en semaine.</p></div></div></div>`;
 }
 
 export function renderPortfolioPage(
@@ -284,6 +284,27 @@ export function renderPortfolioPage(
     rgba(255, 255, 255, 0.02) 50%,
     rgba(255, 255, 255, 0.04) 100%
   );
+}
+.modal-backdrop {
+  animation: modal-fade-in 450ms ease-out;
+}
+.modal-card {
+  transform-origin: 50% 60%;
+  animation: modal-card-in 550ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modal-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 @keyframes bg-drift-1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
