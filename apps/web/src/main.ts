@@ -38,6 +38,10 @@ function isStackDetailOpen(): boolean {
   return window.location.hash === "#stack-detail";
 }
 
+function isAllProjectsOpen(): boolean {
+  return window.location.hash === "#projects-all";
+}
+
 function isContactPopupOpen(): boolean {
   return window.location.hash === "#contact-popup";
 }
@@ -108,6 +112,7 @@ if (app) {
       ? (homeData.studies.find((study) => study.id === activeStudyId) ?? null)
       : null;
     const isStackOpen = isStackDetailOpen();
+    const isAllProjectsListOpen = isAllProjectsOpen();
     const isContactOpen = isContactPopupOpen();
 
     app.innerHTML = renderPortfolioPage(
@@ -119,6 +124,7 @@ if (app) {
       activeStudy,
       activeStudyId,
       isStackOpen,
+      isAllProjectsListOpen,
       isContactOpen,
     );
 

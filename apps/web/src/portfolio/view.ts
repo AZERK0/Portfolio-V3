@@ -179,10 +179,20 @@ function renderInfoRow(data: PortfolioHomeViewModel) {
   return `<section class="col-span-1 grid grid-cols-2 gap-4 md:col-span-3 lg:col-span-4 md:grid-cols-4">${educationCards}${stackCard}</section>`;
 }
 
-function renderProjectCards(data: PortfolioHomeViewModel) {
-  return data.projects
-    .filter((project) => project.featured)
-    .slice(0, 4)
+function renderProjectCards(
+  data: PortfolioHomeViewModel,
+  options?: { limit?: number; featuredOnly?: boolean },
+) {
+  const projectPool =
+    options?.featuredOnly === false
+      ? data.projects
+      : data.projects.filter((project) => project.featured);
+  const projectsToRender =
+    typeof options?.limit === "number"
+      ? projectPool.slice(0, options.limit)
+      : projectPool;
+
+  return projectsToRender
     .map((project, index) => {
       const tags = project.stack
         .slice(0, 2)
@@ -223,7 +233,22 @@ function renderExperienceSection(data: PortfolioHomeViewModel) {
 }
 
 function renderProjectsAndExperience(data: PortfolioHomeViewModel) {
-  return `<section id="projects" class="col-span-1 mt-2 grid grid-cols-1 gap-4 md:col-span-3 lg:col-span-4 lg:grid-cols-2"><div class="flex flex-col gap-4"><div class="animate-blur-in flex items-center justify-between px-2" style="animation-delay: 550ms"><h2 class="flex items-center gap-2 text-xl font-bold text-[#eaddcf]"><span class="h-2 w-2 rounded-full bg-[#f48c25]"></span>Selected Projects</h2><span class="text-xs font-medium text-[#9d8a76]">Click to open details</span></div>${renderProjectCards(data)}</div>${renderExperienceSection(data)}</section>`;
+  return `<section id="projects" class="col-span-1 mt-2 grid grid-cols-1 gap-4 md:col-span-3 lg:col-span-4 lg:grid-cols-2"><div class="flex flex-col gap-4"><div class="animate-blur-in flex items-center justify-between px-2" style="animation-delay: 550ms"><h2 class="flex items-center gap-2 text-xl font-bold text-[#eaddcf]"><span class="h-2 w-2 rounded-full bg-[#f48c25]"></span>Selected Projects</h2><a href="#projects-all" class="inline-flex items-center gap-1.5 rounded-full border border-[#f48c25]/35 bg-[#f48c25]/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-[#f48c25] transition hover:border-[#f48c25]/60 hover:bg-[#f48c25]/20"><span>Voir tous les projets</span><span class="material-symbols-outlined text-[14px]">arrow_outward</span></a></div>${renderProjectCards(data, { limit: 4 })}</div>${renderExperienceSection(data)}</section>`;
+}
+
+function renderAllProjectsModal(data: PortfolioHomeViewModel, isOpen: boolean) {
+  if (!isOpen) {
+    return "";
+  }
+
+  const body = `<div class="mb-4 flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3"><p class="text-sm text-[#9d8a76]">Clique sur un projet pour ouvrir sa detail card.</p><span class="rounded-full border border-[#f48c25]/25 bg-[#f48c25]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#f48c25]">${data.projects.length} projets</span></div><div class="max-h-[62vh] space-y-3 overflow-y-auto pr-1">${renderProjectCards(data, { featuredOnly: false })}</div>`;
+
+  return renderDetailModalShell({
+    kicker: "Projects",
+    title: "Tous les projets",
+    body,
+    maxWidth: "max-w-3xl",
+  });
 }
 
 function renderDetailModalShell({
@@ -359,9 +384,10 @@ export function renderPortfolioPage(
   activeStudy: StudyDocument | null,
   activeStudyId: string | null,
   isStackDetailOpen: boolean,
+  isAllProjectsListOpen: boolean,
   isContactPopupOpen: boolean,
 ) {
-  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute inset-0 bg-grid-pattern"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div><div class="bg-glow bg-glow-3"></div></div><div class="relative z-10">${renderHeader(data.profile)}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-12 md:grid-cols-3 lg:grid-cols-4">${renderTopRow(data)}${renderInfoRow(data)}${renderProjectsAndExperience(data)}</main></div>${renderProjectDetailModal(activeProject, activeSlug)}${renderExperienceDetailModal(activeExperience, activeExperienceId)}${renderStudyDetailModal(activeStudy, activeStudyId)}${renderStackDetailModal(data, isStackDetailOpen)}${renderContactModal(data.profile, isContactPopupOpen)}</div><style>
+  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute inset-0 bg-grid-pattern"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div><div class="bg-glow bg-glow-3"></div></div><div class="relative z-10">${renderHeader(data.profile)}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-12 md:grid-cols-3 lg:grid-cols-4">${renderTopRow(data)}${renderInfoRow(data)}${renderProjectsAndExperience(data)}</main></div>${renderProjectDetailModal(activeProject, activeSlug)}${renderExperienceDetailModal(activeExperience, activeExperienceId)}${renderStudyDetailModal(activeStudy, activeStudyId)}${renderStackDetailModal(data, isStackDetailOpen)}${renderAllProjectsModal(data, isAllProjectsListOpen)}${renderContactModal(data.profile, isContactPopupOpen)}</div><style>
 .portfolio-stack-marquee {
   position: relative;
   overflow: hidden;
