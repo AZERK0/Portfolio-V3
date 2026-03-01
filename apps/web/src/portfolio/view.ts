@@ -124,6 +124,19 @@ function renderTopRow(data: PortfolioHomeViewModel) {
 }
 
 function renderInfoRow(data: PortfolioHomeViewModel) {
+  const categoryMeta: Record<
+    NonNullable<PortfolioHomeViewModel["skills"][number]["category"]>,
+    { label: string; icon: string }
+  > = {
+    language: { label: "Langages", icon: "code" },
+    frontend: { label: "Frontend", icon: "web" },
+    backend: { label: "Backend", icon: "dns" },
+    data: { label: "Data", icon: "database" },
+    devops: { label: "DevOps", icon: "deployed_code" },
+    tooling: { label: "Tooling", icon: "build" },
+    other: { label: "Autres", icon: "extension" },
+  };
+
   const educationCards = data.studies
     .map((education, index) => {
       const icon = index === 0 ? "school" : "history_edu";
@@ -145,14 +158,15 @@ function renderInfoRow(data: PortfolioHomeViewModel) {
     .join("");
 
   const stack = data.skills
-    .map(
-      (skill) =>
-        `<span class="rounded border border-white/5 bg-[#171412] px-3 py-1.5 text-xs font-medium text-[#eaddcf]">${skill.name}</span>`,
-    )
+    .map((skill) => {
+      const category = categoryMeta[skill.category] ?? categoryMeta.other;
+
+      return `<div class="inline-flex h-11 shrink-0 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-[#171412] px-4 text-sm transition-all duration-300 hover:border-[#f48c25]/35 hover:bg-[#1d1916]"><span class="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-black/25 text-[#f48c25]"><span class="material-symbols-outlined text-[15px]">${skill.iconName ?? category.icon}</span></span><span class="font-semibold text-[#eaddcf]">${skill.name}</span><span class="text-[10px] font-medium uppercase tracking-wide text-[#9d8a76]">${category.label}</span></div>`;
+    })
     .join("");
 
   const stackCard = UiCard({
-    children: `<p class="mb-3 text-xs font-bold uppercase tracking-wider text-[#9d8a76]">Core Stack</p><div class="flex flex-wrap gap-2">${stack}</div>`,
+    children: `<div class="flex h-full min-h-[11rem] flex-col"><div class="mb-4 flex items-end justify-between gap-3"><p class="text-xs font-bold uppercase tracking-wider text-[#9d8a76]">Core Stack</p><span class="rounded-full border border-[#f48c25]/25 bg-[#f48c25]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#f48c25]">${data.skills.length} technologies</span></div><p class="mb-3 text-sm text-[#9d8a76]">Stack principale utilisee sur les projets recents.</p><div class="mt-auto pt-2"><div class="portfolio-stack-marquee"><div class="portfolio-stack-track">${stack}${stack}</div></div></div></div>`,
     className:
       "animate-blur-in col-span-2 rounded-2xl border-white/5 bg-[#110f0e] p-6",
     style: "animation-delay: 500ms",
@@ -240,6 +254,22 @@ export function renderPortfolioPage(
   isContactPopupOpen: boolean,
 ) {
   return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute inset-0 bg-grid-pattern"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div><div class="bg-glow bg-glow-3"></div></div><div class="relative z-10">${renderHeader(data.profile)}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-12 md:grid-cols-3 lg:grid-cols-4">${renderTopRow(data)}${renderInfoRow(data)}${renderProjectsAndExperience(data)}</main></div>${renderProjectDetailModal(activeProject, activeSlug)}${renderContactModal(data.profile, isContactPopupOpen)}</div><style>
+.portfolio-stack-marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.portfolio-stack-track {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: max-content;
+  padding-right: 0.7rem;
+  animation: stack-marquee 34s linear infinite;
+}
+.portfolio-stack-marquee:hover .portfolio-stack-track {
+  animation-play-state: paused;
+}
 .bg-grid-pattern {
   background-image: 
     linear-gradient(rgba(244,140,37,0.04) 1px, transparent 1px),
@@ -324,6 +354,10 @@ export function renderPortfolioPage(
   0%, 100% { transform: translate(-50%, -50%) scale(1); }
   50% { transform: translate(-50%, -50%) scale(1.3); }
 }
+@keyframes stack-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 0.35rem)); }
+}
 .animate-blur-in {
   animation: blur-in 0.6s cubic-bezier(0.2, 0.9, 0.25, 1) both;
 }
@@ -345,6 +379,12 @@ export function renderPortfolioPage(
     opacity: 1;
     transform: scale(1);
     filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-stack-track {
+    animation: none;
   }
 }
 </style>`;
