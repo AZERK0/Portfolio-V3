@@ -42,6 +42,27 @@ function isAllProjectsOpen(): boolean {
   return window.location.hash === "#projects-all";
 }
 
+function getGalleryParamsFromHash(): { projectSlug: string; assetIndex: number } | null {
+  const hash = window.location.hash;
+  if (!hash.startsWith("#gallery/")) {
+    return null;
+  }
+
+  const parts = hash.replace("#gallery/", "").split("/");
+  if (parts.length !== 2) {
+    return null;
+  }
+
+  const projectSlug = parts[0];
+  const assetIndex = parseInt(parts[1], 10);
+
+  if (isNaN(assetIndex)) {
+    return null;
+  }
+
+  return { projectSlug, assetIndex };
+}
+
 function isContactPopupOpen(): boolean {
   return window.location.hash === "#contact-popup";
 }
@@ -114,6 +135,10 @@ if (app) {
     const isStackOpen = isStackDetailOpen();
     const isAllProjectsListOpen = isAllProjectsOpen();
     const isContactOpen = isContactPopupOpen();
+    const galleryParams = getGalleryParamsFromHash();
+    const galleryProject = galleryParams
+      ? homeData.projects.find((project) => project.slug === galleryParams.projectSlug) ?? null
+      : null;
 
     app.innerHTML = renderPortfolioPage(
       homeData,
@@ -125,6 +150,8 @@ if (app) {
       activeStudyId,
       isStackOpen,
       isAllProjectsListOpen,
+      galleryProject,
+      galleryParams?.assetIndex ?? null,
       isContactOpen,
     );
 

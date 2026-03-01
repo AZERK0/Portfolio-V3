@@ -273,14 +273,53 @@ function renderProjectDetailModal(
     return "";
   }
 
-  const body = project
-    ? `<div class="mb-4 overflow-hidden rounded-2xl border border-white/[0.08]"><img src="${project.cover.url}" alt="${project.cover.alt}" class="h-52 w-full object-cover" /></div><div class="mb-4 flex flex-wrap gap-2">${project.stack.map((item) => `<span class="rounded-xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-[#eaddcf]">${item}</span>`).join("")}</div><p class="mb-4 text-sm leading-relaxed text-[#9d8a76]">${project.longDescription ?? project.shortDescription}</p>${(project.sections ?? []).map((section) => `<div class="mb-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"><h4 class="mb-1 text-sm font-bold text-[#eaddcf]">${section.title}</h4><p class="text-sm text-[#9d8a76]">${section.body}</p></div>`).join("")}`
-    : `<p class="text-sm text-[#9d8a76]">Chargement du projet ${slug}...</p>`;
+  const categoryLabel: Record<string, string> = {
+    freelance: "Freelance",
+    personal: "Personnel",
+    school: "Scolaire",
+    internship: "Stage",
+    "open-source": "Open source",
+  };
+
+  const toneClass: Record<string, string> = {
+    neutral: "border-white/15 bg-white/5 text-[#eaddcf]",
+    green: "border-emerald-500/30 bg-emerald-500/10 text-emerald-200",
+    blue: "border-sky-500/30 bg-sky-500/10 text-sky-200",
+    yellow: "border-amber-500/30 bg-amber-500/10 text-amber-200",
+    red: "border-rose-500/30 bg-rose-500/10 text-rose-200",
+  };
+
+  if (!project) {
+    return renderDetailModalShell({
+      kicker: "Project detail",
+      title: slug,
+      body: `<p class="text-sm text-[#9d8a76]">Chargement du projet ${slug}...</p>`,
+      maxWidth: "max-w-3xl",
+    });
+  }
+
+  const primaryProjectLink = project.links?.[0] ?? null;
+  const coverRedirectLayer = primaryProjectLink
+    ? `<a href="${primaryProjectLink.url}" ${primaryProjectLink.openInNewTab ? 'target="_blank" rel="noreferrer"' : ""} class="group absolute inset-0 z-10 cursor-pointer" aria-label="Ouvrir ${project.title}"><span class="pointer-events-none absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/20"></span></a>`
+    : "";
+
+  const coverLinks =
+    project.links && project.links.length > 0
+      ? `<div class="absolute bottom-3 right-3 z-20 flex flex-wrap justify-end gap-2">${project.links
+          .map(
+            (link, index) =>
+              `<a href="${link.url}" ${link.openInNewTab ? 'target="_blank" rel="noreferrer"' : ""} class="inline-flex items-center gap-1.5 rounded-xl border px-2 py-1 text-xs font-semibold transition ${index === 0 ? "border-white/35 bg-transparent transition duration-300 backdrop-blur-2xl text-[#eaddcf] group-hover/cover:border-[#f48c25]/55 group-hover/cover:bg-[#f48c25]/90 group-hover/cover:text-[#1a120b]" : "border-white/20 bg-black/35 text-[#eaddcf] hover:border-[#f48c25]/45 hover:bg-black/55"}"><span>${link.label}</span><span class="material-symbols-outlined text-[14px]">arrow_outward</span></a>`,
+          )
+          .join("")}</div>`
+      : "";
+
+  const body = `<div class="group/cover relative mb-4 overflow-hidden rounded-2xl border border-white/[0.08]"><img src="${project.cover.url}" alt="${project.cover.alt}" class="h-56 w-full object-cover transition duration-500 group-hover/cover:scale-[1.03]" />${coverRedirectLayer}${coverLinks}<div class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/65 via-black/15 to-transparent"></div></div><div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-[#eaddcf]">${categoryLabel[project.category] ?? project.category}</span><span class="rounded-xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-[#eaddcf]">${project.period.label}</span>${project.badge ? `<span class="rounded-xl border px-2.5 py-1 text-xs ${toneClass[project.badge.tone] ?? toneClass.neutral}">${project.badge.label}</span>` : ""}</div>${project.alert ? `<div class="mb-4 rounded-xl border p-3 ${toneClass[project.alert.tone] ?? toneClass.neutral}"><p class="text-sm font-semibold">${project.alert.title}</p><p class="mt-1 text-sm opacity-90">${project.alert.description}</p></div>` : ""}<p class="mb-4 text-sm leading-relaxed text-[#9d8a76]">${project.longDescription ?? project.shortDescription}</p>${project.metrics && project.metrics.length > 0 ? `<div class="mb-4 grid gap-2 sm:grid-cols-2">${project.metrics.map((metric) => `<div class="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">${metric.label}</p><p class="mt-1 text-lg font-bold text-[#eaddcf]">${metric.value}</p></div>`).join("")}</div>` : ""}<div class="mb-4"><p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9d8a76]">Stack</p><div class="flex flex-wrap gap-2">${project.stack.map((item) => `<span class="rounded-xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-[#eaddcf]">${item}</span>`).join("")}</div></div>${project.gallery && project.gallery.length > 0 ? `<div class="mb-4"><p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9d8a76]">Galerie</p><div class="grid gap-2 sm:grid-cols-2">${project.gallery.map((asset, index) => asset.kind === "video" ? `<video src="${asset.url}" controls playsinline class="h-36 w-full rounded-xl border border-white/[0.08] bg-black object-cover"></video>` : `<a href="#gallery/${project.slug}/${index}" class="group/asset block overflow-hidden rounded-xl border border-white/[0.08] bg-black transition hover:border-[#f48c25]/30"><figure class="relative"><img src="${asset.url}" alt="${asset.alt}" class="h-36 w-full object-cover transition duration-300 group-hover/asset:scale-105" />${asset.caption ? `<figcaption class="px-2 py-1 text-[11px] text-[#9d8a76]">${asset.caption}</figcaption>` : ""}<div class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 transition group-hover/asset:bg-black/30"><span class="material-symbols-outlined text-3xl text-white opacity-0 transition group-hover/asset:opacity-100">zoom_in</span></div></figure></a>`).join("")}</div></div>` : ""}${(project.sections ?? []).map((section) => `<div class="mb-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"><h4 class="mb-1 text-sm font-bold text-[#eaddcf]">${section.title}</h4><p class="text-sm text-[#9d8a76]">${section.body}</p></div>`).join("")}`;
 
   return renderDetailModalShell({
     kicker: "Project detail",
-    title: project?.title ?? slug,
+    title: project.title,
     body,
+    maxWidth: "max-w-3xl",
   });
 }
 
@@ -365,6 +404,28 @@ function renderStackDetailModal(data: PortfolioHomeViewModel, isOpen: boolean) {
   });
 }
 
+
+function renderGalleryLightboxModal(
+  project: ProjectDocument | null,
+  assetIndex: number | null,
+) {
+  if (!project || assetIndex === null || !project.gallery || assetIndex >= project.gallery.length) {
+    return "";
+  }
+
+  const asset = project.gallery[assetIndex];
+  const prevIndex = assetIndex > 0 ? assetIndex - 1 : null;
+  const nextIndex = assetIndex < project.gallery.length - 1 ? assetIndex + 1 : null;
+
+  const navButtons = `<div class="flex items-center justify-center gap-3">${prevIndex !== null ? `<a href="#gallery/${project.slug}/${prevIndex}" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/35 text-[#eaddcf] transition hover:border-[#f48c25]/45 hover:bg-black/55"><span class="material-symbols-outlined">chevron_left</span></a>` : '<span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/20 text-white/30"><span class="material-symbols-outlined">chevron_left</span></span>'}<span class="text-sm text-[#9d8a76]">${assetIndex + 1} / ${project.gallery.length}</span>${nextIndex !== null ? `<a href="#gallery/${project.slug}/${nextIndex}" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/35 text-[#eaddcf] transition hover:border-[#f48c25]/45 hover:bg-black/55"><span class="material-symbols-outlined">chevron_right</span></a>` : '<span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/20 text-white/30"><span class="material-symbols-outlined">chevron_right</span></span>'}</div>`;
+
+  const body = asset.kind === "video"
+    ? `<div class="mb-4 flex items-center justify-center rounded-2xl border border-white/[0.08] bg-black"><video src="${asset.url}" controls playsinline class="max-h-[60vh] w-full rounded-2xl"></video></div>${navButtons}`
+    : `<div class="relative mb-4 overflow-hidden rounded-2xl border border-white/[0.08] bg-black"><img src="${asset.url}" alt="${asset.alt}" class="max-h-[60vh] w-full object-contain" /></div>${asset.caption ? `<p class="mb-4 text-center text-sm text-[#9d8a76]">${asset.caption}</p>` : ""}${navButtons}`;
+
+  return `<div class="modal-root fixed inset-0 z-[60] flex items-center justify-center p-4"><a href="#project/${project.slug}" class="modal-backdrop absolute inset-0 bg-black/75"></a><div class="modal-card glass-panel relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-[#eaddcf] shadow-[0_32px_96px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[28px]"><div class="relative z-10"><div class="mb-4 flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#f48c25]">Galerie</p><h3 class="mt-2 text-xl font-black tracking-tight text-[#eaddcf]">${project.title}</h3></div><a href="#project/${project.slug}" class="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-medium text-[#eaddcf] transition hover:border-[#f48c25]/40 hover:bg-[#f48c25]/10 hover:text-[#f48c25]">Fermer</a></div>${body}</div></div></div>`;
+}
+
 function renderContactModal(profile: ProfileDocument, isOpen: boolean) {
   if (!isOpen) {
     return "";
@@ -385,9 +446,11 @@ export function renderPortfolioPage(
   activeStudyId: string | null,
   isStackDetailOpen: boolean,
   isAllProjectsListOpen: boolean,
+  galleryProject: ProjectDocument | null,
+  galleryAssetIndex: number | null,
   isContactPopupOpen: boolean,
 ) {
-  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute inset-0 bg-grid-pattern"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div><div class="bg-glow bg-glow-3"></div></div><div class="relative z-10">${renderHeader(data.profile)}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-12 md:grid-cols-3 lg:grid-cols-4">${renderTopRow(data)}${renderInfoRow(data)}${renderProjectsAndExperience(data)}</main></div>${renderProjectDetailModal(activeProject, activeSlug)}${renderExperienceDetailModal(activeExperience, activeExperienceId)}${renderStudyDetailModal(activeStudy, activeStudyId)}${renderStackDetailModal(data, isStackDetailOpen)}${renderAllProjectsModal(data, isAllProjectsListOpen)}${renderContactModal(data.profile, isContactPopupOpen)}</div><style>
+  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute inset-0 bg-grid-pattern"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div><div class="bg-glow bg-glow-3"></div></div><div class="relative z-10">${renderHeader(data.profile)}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-12 md:grid-cols-3 lg:grid-cols-4">${renderTopRow(data)}${renderInfoRow(data)}${renderProjectsAndExperience(data)}</main></div>${renderProjectDetailModal(activeProject, activeSlug)}${renderExperienceDetailModal(activeExperience, activeExperienceId)}${renderStudyDetailModal(activeStudy, activeStudyId)}${renderStackDetailModal(data, isStackDetailOpen)}${renderAllProjectsModal(data, isAllProjectsListOpen)}${renderGalleryLightboxModal(galleryProject, galleryAssetIndex)}${renderContactModal(data.profile, isContactPopupOpen)}</div><style>
 .portfolio-stack-marquee {
   position: relative;
   overflow: hidden;
