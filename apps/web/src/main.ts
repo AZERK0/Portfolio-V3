@@ -16,6 +16,28 @@ function getProjectSlugFromHash(): string | null {
   return hash.replace("#project/", "") || null;
 }
 
+function getExperienceIdFromHash(): string | null {
+  const hash = window.location.hash;
+  if (!hash.startsWith("#experience/")) {
+    return null;
+  }
+
+  return hash.replace("#experience/", "") || null;
+}
+
+function getStudyIdFromHash(): string | null {
+  const hash = window.location.hash;
+  if (!hash.startsWith("#study/")) {
+    return null;
+  }
+
+  return hash.replace("#study/", "") || null;
+}
+
+function isStackDetailOpen(): boolean {
+  return window.location.hash === "#stack-detail";
+}
+
 function isContactPopupOpen(): boolean {
   return window.location.hash === "#contact-popup";
 }
@@ -75,12 +97,28 @@ if (app) {
     const activeProject = activeSlug
       ? await loadProjectDetailBySlug(activeSlug)
       : null;
+    const activeExperienceId = getExperienceIdFromHash();
+    const activeExperience = activeExperienceId
+      ? (homeData.experiences.find(
+          (experience) => experience.id === activeExperienceId,
+        ) ?? null)
+      : null;
+    const activeStudyId = getStudyIdFromHash();
+    const activeStudy = activeStudyId
+      ? (homeData.studies.find((study) => study.id === activeStudyId) ?? null)
+      : null;
+    const isStackOpen = isStackDetailOpen();
     const isContactOpen = isContactPopupOpen();
 
     app.innerHTML = renderPortfolioPage(
       homeData,
       activeProject,
       activeSlug,
+      activeExperience,
+      activeExperienceId,
+      activeStudy,
+      activeStudyId,
+      isStackOpen,
       isContactOpen,
     );
 

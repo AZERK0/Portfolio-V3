@@ -1,10 +1,25 @@
 import { UiCard } from "@repo/ui/card";
 
 import type {
+  ExperienceDocument,
   PortfolioHomeViewModel,
   ProfileDocument,
   ProjectDocument,
+  StudyDocument,
 } from "./model";
+
+const STACK_CATEGORY_META: Record<
+  NonNullable<PortfolioHomeViewModel["skills"][number]["category"]>,
+  { label: string; icon: string }
+> = {
+  language: { label: "Langages", icon: "code" },
+  frontend: { label: "Frontend", icon: "web" },
+  backend: { label: "Backend", icon: "dns" },
+  data: { label: "Data", icon: "database" },
+  devops: { label: "DevOps", icon: "deployed_code" },
+  tooling: { label: "Tooling", icon: "build" },
+  other: { label: "Autres", icon: "extension" },
+};
 
 function renderSocialIconButtons(profile: ProfileDocument) {
   const itemClass =
@@ -124,19 +139,6 @@ function renderTopRow(data: PortfolioHomeViewModel) {
 }
 
 function renderInfoRow(data: PortfolioHomeViewModel) {
-  const categoryMeta: Record<
-    NonNullable<PortfolioHomeViewModel["skills"][number]["category"]>,
-    { label: string; icon: string }
-  > = {
-    language: { label: "Langages", icon: "code" },
-    frontend: { label: "Frontend", icon: "web" },
-    backend: { label: "Backend", icon: "dns" },
-    data: { label: "Data", icon: "database" },
-    devops: { label: "DevOps", icon: "deployed_code" },
-    tooling: { label: "Tooling", icon: "build" },
-    other: { label: "Autres", icon: "extension" },
-  };
-
   const educationCards = data.studies
     .map((education, index) => {
       const icon = index === 0 ? "school" : "history_edu";
@@ -147,9 +149,10 @@ function renderInfoRow(data: PortfolioHomeViewModel) {
       const delay = 300 + index * 100;
 
       const content = `<div class="mb-4 flex items-start justify-between"><div class="flex h-10 w-10 items-center justify-center rounded-lg ${iconStyle}"><span class="material-symbols-outlined">${icon}</span></div><span class="text-xs font-mono text-[#9d8a76]">${education.period.label}</span></div><h3 class="text-lg font-bold leading-tight text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${education.school}</h3><p class="mt-1 text-sm text-[#9d8a76]">${education.degree}</p>`;
+      const cardLink = `<a href="#study/${education.id}" class="block h-full w-full">${content}<div class="mt-4 inline-flex items-center gap-1 text-xs font-medium uppercase tracking-wide text-[#9d8a76] transition group-hover:text-[#f48c25]"><span>Voir details</span><span class="material-symbols-outlined text-[14px]">arrow_outward</span></div></a>`;
 
       return UiCard({
-        children: content,
+        children: cardLink,
         className:
           "animate-blur-in group col-span-1 rounded-2xl border-white/5 bg-[#110f0e] p-6 transition-colors hover:border-[#f48c25]/30",
         style: `animation-delay: ${delay}ms`,
@@ -159,16 +162,17 @@ function renderInfoRow(data: PortfolioHomeViewModel) {
 
   const stack = data.skills
     .map((skill) => {
-      const category = categoryMeta[skill.category] ?? categoryMeta.other;
+      const category =
+        STACK_CATEGORY_META[skill.category] ?? STACK_CATEGORY_META.other;
 
       return `<div class="inline-flex h-11 shrink-0 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-[#171412] px-4 text-sm transition-all duration-300 hover:border-[#f48c25]/35 hover:bg-[#1d1916]"><span class="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-black/25 text-[#f48c25]"><span class="material-symbols-outlined text-[15px]">${skill.iconName ?? category.icon}</span></span><span class="font-semibold text-[#eaddcf]">${skill.name}</span><span class="text-[10px] font-medium uppercase tracking-wide text-[#9d8a76]">${category.label}</span></div>`;
     })
     .join("");
 
   const stackCard = UiCard({
-    children: `<div class="flex h-full min-h-[11rem] flex-col"><div class="mb-4 flex items-end justify-between gap-3"><p class="text-xs font-bold uppercase tracking-wider text-[#9d8a76]">Core Stack</p><span class="rounded-full border border-[#f48c25]/25 bg-[#f48c25]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#f48c25]">${data.skills.length} technologies</span></div><p class="mb-3 text-sm text-[#9d8a76]">Stack principale utilisee sur les projets recents.</p><div class="mt-auto pt-2"><div class="portfolio-stack-marquee"><div class="portfolio-stack-track">${stack}${stack}</div></div></div></div>`,
+    children: `<a href="#stack-detail" class="group flex h-full min-h-[11rem] flex-col"><div class="mb-4 flex items-end justify-between gap-3"><p class="text-xs font-bold uppercase tracking-wider text-[#9d8a76]">Core Stack</p><span class="rounded-full border border-[#f48c25]/25 bg-[#f48c25]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#f48c25]">${data.skills.length} technologies</span></div><p class="mb-3 text-sm text-[#9d8a76]">Stack principale utilisee sur les projets recents.</p><div class="portfolio-stack-rail mt-auto space-y-2 pt-2"><div class="portfolio-stack-marquee"><div class="portfolio-stack-track">${stack}${stack}</div></div><div class="portfolio-stack-marquee"><div class="portfolio-stack-track portfolio-stack-track-reverse">${stack}${stack}</div></div></div><div class="mt-4 inline-flex items-center gap-1 text-xs font-medium uppercase tracking-wide text-[#9d8a76] transition group-hover:text-[#f48c25]"><span>Voir details</span><span class="material-symbols-outlined text-[14px]">arrow_outward</span></div></a>`,
     className:
-      "animate-blur-in col-span-2 rounded-2xl border-white/5 bg-[#110f0e] p-6",
+      "animate-blur-in col-span-2 rounded-2xl border-white/5 bg-[#110f0e] p-6 transition-colors hover:border-[#f48c25]/30",
     style: "animation-delay: 500ms",
   });
 
@@ -202,7 +206,7 @@ function renderExperienceSection(data: PortfolioHomeViewModel) {
           ? "bg-[#f48c25] ring-[#110f0e]"
           : "border border-[#9d8a76] bg-[#171412] ring-[#110f0e]";
 
-      return `<div class="relative border-l border-white/10 pl-6"><span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ring-4 ${marker}"></span><div class="mb-1 flex items-baseline justify-between"><h4 class="text-lg font-bold text-[#eaddcf]">${experience.role}</h4><span class="text-xs font-mono text-[#9d8a76]">${experience.period.label}</span></div><p class="mb-2 text-sm font-medium text-[#f48c25]">${experience.company}</p><p class="text-sm leading-relaxed text-[#9d8a76]">${experience.summary}</p></div>`;
+      return `<a href="#experience/${experience.id}" class="group relative block rounded-xl border border-transparent p-3 -m-3 transition-colors hover:border-[#f48c25]/20 hover:bg-[#171412]/50"><div class="relative border-l border-white/10 pl-6"><span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ring-4 ${marker}"></span><div class="mb-1 flex items-baseline justify-between"><h4 class="text-lg font-bold text-[#eaddcf] transition-colors group-hover:text-[#f48c25]">${experience.role}</h4><span class="text-xs font-mono text-[#9d8a76]">${experience.period.label}</span></div><p class="mb-2 text-sm font-medium text-[#f48c25]">${experience.company}</p><p class="text-sm leading-relaxed text-[#9d8a76]">${experience.summary}</p></div></a>`;
     })
     .join("");
 
@@ -222,6 +226,20 @@ function renderProjectsAndExperience(data: PortfolioHomeViewModel) {
   return `<section id="projects" class="col-span-1 mt-2 grid grid-cols-1 gap-4 md:col-span-3 lg:col-span-4 lg:grid-cols-2"><div class="flex flex-col gap-4"><div class="animate-blur-in flex items-center justify-between px-2" style="animation-delay: 550ms"><h2 class="flex items-center gap-2 text-xl font-bold text-[#eaddcf]"><span class="h-2 w-2 rounded-full bg-[#f48c25]"></span>Selected Projects</h2><span class="text-xs font-medium text-[#9d8a76]">Click to open details</span></div>${renderProjectCards(data)}</div>${renderExperienceSection(data)}</section>`;
 }
 
+function renderDetailModalShell({
+  kicker,
+  title,
+  body,
+  maxWidth = "max-w-2xl",
+}: {
+  kicker: string;
+  title: string;
+  body: string;
+  maxWidth?: string;
+}) {
+  return `<div class="modal-root fixed inset-0 z-50 flex items-center justify-center p-4"><a href="#" class="modal-backdrop absolute inset-0 bg-black/55"></a><div class="modal-card glass-panel relative w-full ${maxWidth} overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-[#eaddcf] shadow-[0_32px_96px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[28px]"><div class="relative z-10"><div class="mb-5 flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#f48c25]">${kicker}</p><h3 class="mt-2 text-2xl font-black tracking-tight text-[#eaddcf]">${title}</h3></div><a href="#" class="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-medium text-[#eaddcf] transition hover:border-[#f48c25]/40 hover:bg-[#f48c25]/10 hover:text-[#f48c25]">Fermer</a></div>${body}</div></div></div>`;
+}
+
 function renderProjectDetailModal(
   project: ProjectDocument | null,
   slug: string | null,
@@ -234,7 +252,92 @@ function renderProjectDetailModal(
     ? `<div class="mb-4 overflow-hidden rounded-2xl border border-white/[0.08]"><img src="${project.cover.url}" alt="${project.cover.alt}" class="h-52 w-full object-cover" /></div><div class="mb-4 flex flex-wrap gap-2">${project.stack.map((item) => `<span class="rounded-xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-[#eaddcf]">${item}</span>`).join("")}</div><p class="mb-4 text-sm leading-relaxed text-[#9d8a76]">${project.longDescription ?? project.shortDescription}</p>${(project.sections ?? []).map((section) => `<div class="mb-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"><h4 class="mb-1 text-sm font-bold text-[#eaddcf]">${section.title}</h4><p class="text-sm text-[#9d8a76]">${section.body}</p></div>`).join("")}`
     : `<p class="text-sm text-[#9d8a76]">Chargement du projet ${slug}...</p>`;
 
-  return `<div class="modal-root fixed inset-0 z-50 flex items-center justify-center p-4"><a href="#" class="modal-backdrop absolute inset-0 bg-black/55"></a><div class="modal-card glass-panel relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-[#eaddcf] shadow-[0_32px_96px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-[28px]"><div class="relative z-10"><div class="mb-5 flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-[#f48c25]">Project detail</p><h3 class="mt-2 text-2xl font-black tracking-tight text-[#eaddcf]">${project?.title ?? slug}</h3></div><a href="#" class="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-medium text-[#eaddcf] transition hover:border-[#f48c25]/40 hover:bg-[#f48c25]/10 hover:text-[#f48c25]">Fermer</a></div>${body}</div></div></div>`;
+  return renderDetailModalShell({
+    kicker: "Project detail",
+    title: project?.title ?? slug,
+    body,
+  });
+}
+
+function renderExperienceDetailModal(
+  experience: ExperienceDocument | null,
+  experienceId: string | null,
+) {
+  if (!experienceId) {
+    return "";
+  }
+
+  const body = experience
+    ? `<div class="mb-4 grid gap-3 sm:grid-cols-3"><div class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">Entreprise</p><p class="mt-2 text-sm font-semibold text-[#eaddcf]">${experience.company}</p></div><div class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">Periode</p><p class="mt-2 text-sm font-semibold text-[#eaddcf]">${experience.period.label}</p></div><div class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">Cadre</p><p class="mt-2 text-sm font-semibold text-[#eaddcf]">${experience.locationMode ?? "non precise"}</p></div></div><p class="mb-4 text-sm leading-relaxed text-[#9d8a76]">${experience.summary}</p>${experience.location ? `<div class="mb-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">Localisation</p><p class="mt-2 text-sm text-[#eaddcf]">${experience.location}</p></div>` : ""}${experience.achievements && experience.achievements.length > 0 ? `<div class="mb-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"><h4 class="mb-2 text-sm font-bold text-[#eaddcf]">Realisations cles</h4><ul class="space-y-2">${experience.achievements.map((achievement) => `<li class="flex items-start gap-2 text-sm text-[#9d8a76]"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#f48c25]"></span><span>${achievement}</span></li>`).join("")}</ul></div>` : ""}${experience.stack && experience.stack.length > 0 ? `<div class="flex flex-wrap gap-2">${experience.stack.map((item) => `<span class="rounded-xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-[#eaddcf]">${item}</span>`).join("")}</div>` : ""}`
+    : `<p class="text-sm text-[#9d8a76]">Experience ${experienceId} introuvable.</p>`;
+
+  return renderDetailModalShell({
+    kicker: "Experience detail",
+    title: experience?.role ?? experienceId,
+    body,
+  });
+}
+
+function renderStudyDetailModal(
+  study: StudyDocument | null,
+  studyId: string | null,
+) {
+  if (!studyId) {
+    return "";
+  }
+
+  const body = study
+    ? `<div class="mb-4 grid gap-3 sm:grid-cols-2"><div class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">Etablissement</p><p class="mt-2 text-sm font-semibold text-[#eaddcf]">${study.school}</p></div><div class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">Periode</p><p class="mt-2 text-sm font-semibold text-[#eaddcf]">${study.period.label}</p></div></div><p class="mb-4 text-sm leading-relaxed text-[#9d8a76]">${study.degree}</p>${study.degreeLevel ? `<div class="mb-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">Niveau</p><p class="mt-2 text-sm text-[#eaddcf]">${study.degreeLevel}</p></div>` : ""}${study.location ? `<div class="mb-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"><p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9d8a76]">Localisation</p><p class="mt-2 text-sm text-[#eaddcf]">${study.location}</p></div>` : ""}${study.highlights && study.highlights.length > 0 ? `<div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"><h4 class="mb-2 text-sm font-bold text-[#eaddcf]">Points forts</h4><ul class="space-y-2">${study.highlights.map((highlight) => `<li class="flex items-start gap-2 text-sm text-[#9d8a76]"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#f48c25]"></span><span>${highlight}</span></li>`).join("")}</ul></div>` : ""}`
+    : `<p class="text-sm text-[#9d8a76]">Etude ${studyId} introuvable.</p>`;
+
+  return renderDetailModalShell({
+    kicker: "Study detail",
+    title: study?.school ?? studyId,
+    body,
+  });
+}
+
+function renderStackDetailModal(data: PortfolioHomeViewModel, isOpen: boolean) {
+  if (!isOpen) {
+    return "";
+  }
+
+  const groupedSkills = data.skills.reduce<Record<string, typeof data.skills>>(
+    (acc, skill) => {
+      const key = skill.category;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(skill);
+      return acc;
+    },
+    {},
+  );
+
+  const body = `${Object.entries(groupedSkills)
+    .map(([categoryKey, skills]) => {
+      const category =
+        STACK_CATEGORY_META[
+          categoryKey as NonNullable<
+            PortfolioHomeViewModel["skills"][number]["category"]
+          >
+        ] ?? STACK_CATEGORY_META.other;
+
+      return `<div class="mb-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"><div class="mb-3 flex items-center gap-2"><span class="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#f48c25]/10 text-[#f48c25]"><span class="material-symbols-outlined text-[16px]">${category.icon}</span></span><h4 class="text-sm font-bold text-[#eaddcf]">${category.label}</h4></div><div class="flex flex-wrap gap-2">${skills
+        .map(
+          (skill) =>
+            `<span class="rounded-xl border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-[#eaddcf]">${skill.name}${skill.level ? ` - ${skill.level}` : ""}</span>`,
+        )
+        .join("")}</div></div>`;
+    })
+    .join("")}`;
+
+  return renderDetailModalShell({
+    kicker: "Core stack",
+    title: `${data.skills.length} technologies maitrisees`,
+    body,
+    maxWidth: "max-w-3xl",
+  });
 }
 
 function renderContactModal(profile: ProfileDocument, isOpen: boolean) {
@@ -251,9 +354,14 @@ export function renderPortfolioPage(
   data: PortfolioHomeViewModel,
   activeProject: ProjectDocument | null,
   activeSlug: string | null,
+  activeExperience: ExperienceDocument | null,
+  activeExperienceId: string | null,
+  activeStudy: StudyDocument | null,
+  activeStudyId: string | null,
+  isStackDetailOpen: boolean,
   isContactPopupOpen: boolean,
 ) {
-  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute inset-0 bg-grid-pattern"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div><div class="bg-glow bg-glow-3"></div></div><div class="relative z-10">${renderHeader(data.profile)}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-12 md:grid-cols-3 lg:grid-cols-4">${renderTopRow(data)}${renderInfoRow(data)}${renderProjectsAndExperience(data)}</main></div>${renderProjectDetailModal(activeProject, activeSlug)}${renderContactModal(data.profile, isContactPopupOpen)}</div><style>
+  return `<div class="relative min-h-screen bg-[#060606] text-[#eaddcf]"><div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#120d09] via-[#080808] to-[#060606]"></div><div class="pointer-events-none absolute inset-0 bg-grid-pattern"></div><div class="pointer-events-none absolute inset-0 overflow-hidden"><div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div><div class="bg-glow bg-glow-3"></div></div><div class="relative z-10">${renderHeader(data.profile)}<main class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-12 md:grid-cols-3 lg:grid-cols-4">${renderTopRow(data)}${renderInfoRow(data)}${renderProjectsAndExperience(data)}</main></div>${renderProjectDetailModal(activeProject, activeSlug)}${renderExperienceDetailModal(activeExperience, activeExperienceId)}${renderStudyDetailModal(activeStudy, activeStudyId)}${renderStackDetailModal(data, isStackDetailOpen)}${renderContactModal(data.profile, isContactPopupOpen)}</div><style>
 .portfolio-stack-marquee {
   position: relative;
   overflow: hidden;
@@ -267,7 +375,10 @@ export function renderPortfolioPage(
   padding-right: 0.7rem;
   animation: stack-marquee 34s linear infinite;
 }
-.portfolio-stack-marquee:hover .portfolio-stack-track {
+.portfolio-stack-track-reverse {
+  animation-direction: reverse;
+}
+.portfolio-stack-rail:hover .portfolio-stack-track {
   animation-play-state: paused;
 }
 .bg-grid-pattern {
