@@ -21,7 +21,7 @@ export const profileSeed: ProfileDocument = {
   heroTitle: "Developpeur Full-Stack.",
   city: "Lyon",
   country: "France",
-  portraitUrl: "/portrait.JPG",
+  portraitUrl: "/portrait.webp",
   availability: "Disponible pour stage (Avril - Aout)",
   aboutShort:
     "Developpeur Full-Stack axe produit, architecture scalable et experiences web performantes.",
@@ -258,9 +258,9 @@ export const projectsSeed: ProjectDocument[] = [
     slug: "amazon-analyzer",
     title: "Amazon Analyzer",
     shortDescription:
-        "SaaS + extension pour analyser la rentabilite e-commerce avec agent IA et donnees Keepa.",
+      "SaaS + extension pour analyser la rentabilite e-commerce avec agent IA et donnees Keepa.",
     longDescription:
-        "Creation d'un produit SaaS Full-Stack pour l'analyse de rentabilite Amazon avec analyse concurrentielle assistee par IA.",
+      "Creation d'un produit SaaS Full-Stack pour l'analyse de rentabilite Amazon avec analyse concurrentielle assistee par IA.",
     category: "freelance",
     period: {
       start: { value: "2025", precision: "year" },
@@ -283,7 +283,7 @@ export const projectsSeed: ProjectDocument[] = [
         kind: "image",
         alt: "Amazon Analyzer AI synthese",
         url: "/projects/amazon-analyzer/ai-synthese.webp",
-      }
+      },
     ],
     badge: { label: "Freelance", tone: "yellow" },
     featured: true,
@@ -296,9 +296,9 @@ export const projectsSeed: ProjectDocument[] = [
     slug: "finvio",
     title: "Finvio",
     shortDescription:
-        "Plateforme SaaS de gestion de patrimoine en architecture monorepo Full-Stack.",
+      "Plateforme SaaS de gestion de patrimoine en architecture monorepo Full-Stack.",
     longDescription:
-        "Developpement d'une solution SaaS avec front Nuxt et backend AdonisJS, orientee produit et performance.",
+      "Developpement d'une solution SaaS avec front Nuxt et backend AdonisJS, orientee produit et performance.",
     category: "freelance",
     period: {
       start: { value: "2025", precision: "year" },
@@ -582,7 +582,7 @@ export const statsSeed: PortfolioStatDocument[] = [
     id: "years",
     profileId,
     label: "Annees de pratique",
-    value: "8+",
+    value: "8+ ans",
     order: 1,
     status: "published",
   },
